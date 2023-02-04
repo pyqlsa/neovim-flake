@@ -1,11 +1,25 @@
 {
   description = "pyqlsa's Neovim Configuration";
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
+    nixpkgs = {
+      url = "github:nixos/nixpkgs/nixpkgs-unstable";
+    };
+    flake-utils = {
+      url = "github:numtide/flake-utils";
+    };
+
+    # Langauge server (use master instead of nixpkgs)
+    rnix-lsp = {
+      url = "github:nix-community/rnix-lsp";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.utils.follows = "flake-utils";
+    };
 
     # LSP plugins
     nvim-lspconfig = {
       url = "github:neovim/nvim-lspconfig";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.flake-utils.follows = "flake-utils";
     };
     nvim-treesitter = {
       url = "github:nvim-treesitter/nvim-treesitter";
@@ -76,9 +90,6 @@
       flake = false;
     };
 
-    # Langauge server (use master instead of nixpkgs)
-    rnix-lsp.url = "github:nix-community/rnix-lsp";
-
     # Visuals
     nvim-cursorline = {
       url = "github:yamatsum/nvim-cursorline";
@@ -102,18 +113,17 @@
     };
     nightfox-nvim = {
       url = "github:EdenEast/nightfox.nvim";
-      flake = true;
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.flake-utils.follows = "flake-utils";
     };
     catppuccin-nvim = {
       url = "github:catppuccin/nvim";
       flake = false;
     };
-
     onedark-nvim = {
       url = "github:navarasu/onedark.nvim";
       flake = false;
     };
-
     tokyonight-nvim = {
       url = "github:folke/tokyonight.nvim";
       flake = false;
