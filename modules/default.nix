@@ -4,19 +4,20 @@
 , ...
 }: {
   imports = [
+    ./autocomp
     ./autopairs
     ./basic
     ./bufferline
     ./comment
     ./core
-    ./autocomp
-    ./treesitter
-    ./tree
     ./lsp
+    ./markdown
     ./snippets
     ./statusline
-    ./theme
     ./telescope
+    ./theme
+    ./tree
+    ./treesitter
     ./visuals
   ];
 }

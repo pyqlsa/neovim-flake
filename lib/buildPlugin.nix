@@ -1,9 +1,9 @@
-{
-  pkgs,
-  inputs,
-  plugins,
-  ...
-}: final: prev: let
+{ pkgs
+, inputs
+, plugins
+, ...
+}: final: prev:
+let
   inherit (prev.vimUtils) buildVimPluginFrom2Nix;
 
   treesitterGrammers = prev.tree-sitter.withPlugins (p: [
@@ -38,13 +38,14 @@
         ''
         else "";
     };
-in {
+in
+{
   neovimPlugins =
     builtins.listToAttrs
-    (map
-      (name: {
-        inherit name;
-        value = buildPlug name;
-      })
-      plugins);
+      (map
+        (name: {
+          inherit name;
+          value = buildPlug name;
+        })
+        plugins);
 }

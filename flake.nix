@@ -152,6 +152,14 @@
       url = "github:nvim-telescope/telescope.nvim/0.1.x";
       flake = false;
     };
+
+    # Markdown
+    glow-nvim = {
+      # early job SIGTERM bug breaks preview
+      url = "github:ellisonleao/glow.nvim?rev=4e4c6486110d9d9905d2efc5fd2d562212f0d212";
+      #url = "github:pyqlsa/glow.nvim/blank-preview";
+      flake = false;
+    };
   };
 
   outputs =
@@ -194,6 +202,7 @@
           "nvim-comment"
           "lualine"
           "telescope"
+          "glow-nvim"
         ];
 
         lib = import ./lib { inherit pkgs inputs plugins; };
@@ -234,6 +243,9 @@
               terraform = true;
             };
             vim.telescope = {
+              enable = true;
+            };
+            vim.markdown = {
               enable = true;
             };
             vim.theme = {
