@@ -146,17 +146,17 @@
     "glow-nvim": {
       "flake": false,
       "locked": {
-        "lastModified": 1673634541,
-        "narHash": "sha256-RMyvE2qkuu+ObeP/SO9GW0G17UKO1rO5v4T1cV06PNc=",
-        "owner": "ellisonleao",
+        "lastModified": 1675796373,
+        "narHash": "sha256-OL1s6D8OHyzOeNzIq4we3g6gFpKTtE9raayR4rIUPGw=",
+        "owner": "pyqlsa",
         "repo": "glow.nvim",
-        "rev": "4e4c6486110d9d9905d2efc5fd2d562212f0d212",
+        "rev": "0727be87f94b895557e5818dd18a3e36819a1551",
         "type": "github"
       },
       "original": {
-        "owner": "ellisonleao",
+        "owner": "pyqlsa",
+        "ref": "blank-preview",
         "repo": "glow.nvim",
-        "rev": "4e4c6486110d9d9905d2efc5fd2d562212f0d212",
         "type": "github"
       }
     },

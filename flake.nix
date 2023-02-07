@@ -156,8 +156,8 @@
     # Markdown
     glow-nvim = {
       # early job SIGTERM bug breaks preview
-      url = "github:ellisonleao/glow.nvim?rev=4e4c6486110d9d9905d2efc5fd2d562212f0d212";
-      #url = "github:pyqlsa/glow.nvim/blank-preview";
+      #url = "github:ellisonleao/glow.nvim?rev=4e4c6486110d9d9905d2efc5fd2d562212f0d212";
+      url = "github:pyqlsa/glow.nvim/blank-preview";
       flake = false;
     };
   };
