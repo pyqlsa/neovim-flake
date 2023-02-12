@@ -215,7 +215,7 @@
 
         libOverlay = final: prev: {
           lib = prev.lib.extend (_: _: {
-            inherit (lib) smushString boolToYesNo withPlugins;
+            inherit (lib) boolToYesNo withPlugins;
           });
         };
 
