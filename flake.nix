@@ -215,7 +215,7 @@
 
         libOverlay = final: prev: {
           lib = prev.lib.extend (_: _: {
-            inherit (lib) boolToYesNo withPlugins;
+            inherit (lib) boolToYesNo withPlugins luaFormatted;
           });
         };
 

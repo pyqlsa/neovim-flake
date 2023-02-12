@@ -92,32 +92,6 @@ in
         --- Generated module configs
         ${cfg.luaConfigRC}
       '';
-
-      luaFormatted = name: text:
-        pkgs.stdenv.mkDerivation rec {
-          inherit name;
-          nativeBuildInputs = [ pkgs.stylua ];
-          luaData = pkgs.writeText "unformatted.lua" text;
-          phases = [ "buildPhase" "installPhase" ];
-          buildPhase = ''
-            tmp=$out/tmp.lua
-            mkdir -p "$(dirname "$tmp")"
-            cat "${luaData}" | ${pkgs.stylua}/bin/stylua \
-              --verify \
-              --column-width 120 \
-              --line-endings Unix \
-              --indent-type Spaces \
-              --indent-width 2 \
-              --quote-style AutoPreferDouble \
-              --call-parentheses Always \
-              - > "$tmp"
-          '';
-          installPhase = ''
-            target=$out/$name
-            tmp=$out/tmp.lua
-            mv "$tmp" "$target"
-          '';
-        };
     in
     {
       vim.configRC = ''
