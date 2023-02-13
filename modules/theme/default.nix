@@ -93,7 +93,7 @@ in
               flavour = "${cfg.style}",
               transparent_background = ${boolToString cfg.transparency},
             })
-            vim.cmd("colorscheme ${cgf.name}")
+            vim.cmd("colorscheme ${cfg.name}")
           '';
 
           "vscode" = ''

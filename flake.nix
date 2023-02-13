@@ -229,7 +229,7 @@
           ];
         };
 
-        neovimBuilder = lib.neovimBuilder {
+        machinery = {
           config = {
             vim.autocomplete.enable = true;
             vim.autopairs.enable = true;
@@ -248,52 +248,62 @@
             vim.markdown = {
               enable = true;
             };
-            vim.theme = {
-              enable = true;
-              name = "nightfox";
-              style = "carbonfox";
-            };
             vim.keyMaps = [
               {
                 mode = "'n'";
                 lhs = "'<C-i>'";
                 rhs = "':bprevious<cr>'";
-                options = "{ noremap = true, silent = true}";
+                options = "{ noremap = true, silent = true }";
               }
               {
                 mode = "'n'";
                 lhs = "'<C-o>'";
                 rhs = "':bnext<cr>'";
-                options = "{ noremap = true, silent = true}";
+                options = "{ noremap = true, silent = true }";
               }
             ];
           };
         };
+
+        neovimBuilder = theme: lib.neovimBuilder (pkgs.lib.recursiveUpdate machinery theme);
       in
       rec
       {
-        apps = rec {
-          nvim = {
-            type = "app";
-            program = "${packages.default}/bin/nvim";
-          };
-          default = nvim;
-        };
+        apps =
+          rec {
+            default = nvim;
+            nvim = {
+              type = "app";
+              program = "${packages.default}/bin/nvim";
+            };
+          }
+          // lib.allThemedApps "nvim" neovimBuilder;
 
-        devShells.default = pkgs.mkShell {
-          buildInputs = [ packages.default ];
-        };
+        devShells =
+          rec {
+            default = neovim;
+            neovim = pkgs.mkShell {
+              buildInputs = [ packages.default ];
+            };
+          }
+          // lib.allThemedShells "neovim" neovimBuilder;
 
-        overlays.default = final: prev: {
-          inherit neovimBuilder;
-          neovim = packages.default;
-          neovimPlugins = pkgs.neovimPlugins;
-        };
-
-        packages = rec {
+        overlays = rec {
           default = neovim;
-          neovim = neovimBuilder;
+          neovim = final: prev:
+            {
+              neovimPlugins = pkgs.neovimPlugins;
+              neovimPQ = packages.default;
+            }
+            // lib.allThemedPackages "neovimPQ" neovimBuilder;
         };
+
+        packages =
+          rec {
+            default = neovim;
+            neovim = neovimBuilder lib.defaultTheme;
+          }
+          // lib.allThemedPackages "neovim" neovimBuilder;
       }
     );
 }
