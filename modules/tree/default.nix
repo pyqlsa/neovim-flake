@@ -39,12 +39,6 @@ in
       default = false;
     };
 
-    openOnSetup = mkOption {
-      type = types.bool;
-      description = "Open the window when Vim is started on a directory";
-      default = false;
-    };
-
     ignoreFileTypes = mkOption {
       type = with types; listOf str;
       description = "File types to ignore";
@@ -134,9 +128,13 @@ in
       require('nvim-tree').setup({
         disable_netrw = ${boolToString cfg.disableNetRW},
         hijack_netrw = ${boolToString cfg.hijackNetRW},
-        open_on_tab = ${boolToString cfg.openTreeOnNewTab},
-        open_on_setup = ${boolToString cfg.openOnSetup},
-        open_on_setup_file = ${boolToString cfg.openOnSetup},
+        tab = {
+          sync = {
+            open = ${boolToString cfg.openTreeOnNewTab},
+            close = ${boolToString cfg.openTreeOnNewTab},
+            ignore = {},
+          },
+        },
         system_open = {
           cmd = "${cfg.systemOpenCmd}",
         },

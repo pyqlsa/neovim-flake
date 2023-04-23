@@ -19,7 +19,7 @@ in
       checkTS = mkOption {
         type = types.bool;
         description = "Whether to check treesitter for a pair";
-        default = true;
+        default = false;
       };
     };
   };
@@ -31,6 +31,8 @@ in
 
     vim.luaConfigRC = ''
       -- Autopairs Config
-      require("nvim-autopairs").setup{}'';
+      require("nvim-autopairs").setup({
+        check_ts = ${boolToString cfg.checkTS},
+      })'';
   };
 }

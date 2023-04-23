@@ -7,6 +7,10 @@
     flake-utils = {
       url = "github:numtide/flake-utils";
     };
+    plenary-nvim = {
+      url = "github:nvim-lua/plenary.nvim";
+      flake = false;
+    };
 
     # Langauge server (use master instead of nixpkgs)
     rnix-lsp = {
@@ -22,7 +26,7 @@
       inputs.flake-utils.follows = "flake-utils";
     };
     nvim-treesitter = {
-      url = "github:nvim-treesitter/nvim-treesitter";
+      url = "github:nvim-treesitter/nvim-treesitter/v0.9.0";
       flake = false;
     };
     nvim-treesitter-context = {
@@ -62,7 +66,7 @@
       flake = false;
     };
     lspkind = {
-      url = "github:onsails/lspkind-nvim";
+      url = "github:onsails/lspkind.nvim";
       flake = false;
     };
 
@@ -76,15 +80,11 @@
       flake = false;
     };
 
+    # Rust
     crates-nvim = {
       url = "github:Saecki/crates.nvim";
       flake = false;
     };
-    plenary-nvim = {
-      url = "github:nvim-lua/plenary.nvim";
-      flake = false;
-    };
-
     rust-tools = {
       url = "github:simrat39/rust-tools.nvim";
       flake = false;
@@ -142,6 +142,8 @@
       url = "github:kyazdani42/nvim-tree.lua";
       flake = false;
     };
+
+    # Comment toggle
     nvim-comment = {
       url = "github:terrortylor/nvim-comment";
       flake = false;
@@ -153,11 +155,9 @@
       flake = false;
     };
 
-    # Markdown
+    # Markdown preview
     glow-nvim = {
-      # early job SIGTERM bug breaks preview
-      #url = "github:ellisonleao/glow.nvim?rev=4e4c6486110d9d9905d2efc5fd2d562212f0d212";
-      url = "github:pyqlsa/glow.nvim/blank-preview";
+      url = "github:ellisonleao/glow.nvim";
       flake = false;
     };
   };

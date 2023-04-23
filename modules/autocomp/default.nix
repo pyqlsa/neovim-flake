@@ -92,18 +92,24 @@ in
 
         formatting = {
           format = function(entry, vim_item)
-            --type of kind
-            vim_item.kind = ${optionalString (config.vim.visuals.lspkind.enable) "require('lspkind').presets.default[vim_item.kind] .. ' ' .."} vim_item.kind
+            ${optionalString (config.vim.visuals.lspkind.enable) ''
+        --type of kind
+        local k = require('lspkind').presets.default[vim_item.kind]
+        if k ~= nil and k ~= "" then
+          vim_item.kind = k .. ' ' .. vim_item.kind
+        else
+        end''}
 
-                --name of each source
-                vim_item.menu = ({
-                  buffer   = "[Buffer]",
-                  nvim_lsp = "[LSP]",
-                  vsnip    = "[VSnip]",
-                  crates   = "[Crates]",
-                  path     = "[Path]",
-                })[entry.source.name]
-                return vim_item
+            --name of each source
+            vim_item.menu = ({
+              buffer   = "[Buffer]",
+              nvim_lsp = "[LSP]",
+              vsnip    = "[VSnip]",
+              crates   = "[Crates]",
+              path     = "[Path]",
+            })[entry.source.name]
+
+            return vim_item
           end,
         }
       })
