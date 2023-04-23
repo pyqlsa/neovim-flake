@@ -26,7 +26,8 @@
       inputs.flake-utils.follows = "flake-utils";
     };
     nvim-treesitter = {
-      url = "github:nvim-treesitter/nvim-treesitter/v0.9.0";
+      #url = "github:nvim-treesitter/nvim-treesitter/v0.9.0";
+      url = "github:nvim-treesitter/nvim-treesitter";
       flake = false;
     };
     nvim-treesitter-context = {
