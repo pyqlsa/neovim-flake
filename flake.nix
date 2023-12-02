@@ -15,7 +15,7 @@
     # Langauge server (use master instead of nixpkgs)
     rnix-lsp = {
       url = "github:nix-community/rnix-lsp";
-      inputs.nixpkgs.follows = "nixpkgs";
+      #inputs.nixpkgs.follows = "nixpkgs";
       inputs.utils.follows = "flake-utils";
     };
 
@@ -97,7 +97,8 @@
       flake = false;
     };
     indent-blankline = {
-      url = "github:lukas-reineke/indent-blankline.nvim";
+      # TODO: migrate to version 3
+      url = "github:lukas-reineke/indent-blankline.nvim/v2.20.8";
       flake = false;
     };
     nvim-web-devicons = {
