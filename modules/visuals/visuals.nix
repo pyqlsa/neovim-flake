@@ -48,6 +48,12 @@ in
         default = true;
       };
 
+      indentChar = mkOption {
+        type = types.str;
+        description = "character for indentation line";
+        default = "│";
+      };
+
       listChars = mkOption {
         type = types.attrs;
         description = "Attribute set of characters to use for Vim's listchars option";
@@ -58,10 +64,10 @@ in
         };
       };
 
-      showCurrContext = mkOption {
+      showScope = mkOption {
         type = types.bool;
-        description = "Highlight current context from treesitter";
-        default = true;
+        description = "Highlight scope; requires treesitter";
+        default = false;
       };
     };
   };
@@ -104,15 +110,15 @@ in
         ${optionalString cfg.lspkind.enable ''
             require('lspkind').init()''}
         ${optionalString cfg.indentBlankline.enable ''
-          --- highlight error: https://github.com/lukas-reineke/indent-blankline.nvim/issues/59
-          vim.wo.colorcolumn = "99999"
           vim.opt.list = true
 
           ${concatStringsSep "\n" listChars}
 
-          require("indent_blankline").setup {
-            show_current_context = ${boolToString cfg.indentBlankline.showCurrContext},
-            show_end_of_line = true,
+          require("ibl").setup {
+            enabled = true,
+            indent = { char = "${cfg.indentBlankline.indentChar}" },
+
+            scope = { enabled = ${boolToString cfg.indentBlankline.showScope} },
           }''}
         ${optionalString cfg.cursorWordline.enable ''
             vim.g.cursorline_timeout = ${toString cfg.cursorWordline.lineTimeout}''}

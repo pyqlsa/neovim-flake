@@ -97,8 +97,7 @@
       flake = false;
     };
     indent-blankline = {
-      # TODO: migrate to version 3
-      url = "github:lukas-reineke/indent-blankline.nvim/v2.20.8";
+      url = "github:lukas-reineke/indent-blankline.nvim";
       flake = false;
     };
     nvim-web-devicons = {
