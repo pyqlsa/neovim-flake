@@ -35,7 +35,7 @@
       flake = false;
     };
     null-ls = {
-      url = "github:jose-elias-alvarez/null-ls.nvim";
+      url = "github:pyqlsa/null-ls.nvim";
       flake = false;
     };
     nvim-cmp = {
