@@ -73,7 +73,8 @@
 
     # Autopairs
     nvim-autopairs = {
-      url = "github:windwp/nvim-autopairs";
+      #url = "github:windwp/nvim-autopairs";
+      url = "github:pyqlsa/nvim-autopairs/ts_deprecate_query_get_node_text";
       flake = false;
     };
     nvim-ts-autotag = {
