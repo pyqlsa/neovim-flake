@@ -31,7 +31,7 @@
       flake = false;
     };
     nvim-treesitter-context = {
-      url = "github:lewis6991/nvim-treesitter-context";
+      url = "github:nvim-treesitter/nvim-treesitter-context";
       flake = false;
     };
     null-ls = {
