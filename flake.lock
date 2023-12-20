@@ -305,16 +305,15 @@
     "nvim-autopairs": {
       "flake": false,
       "locked": {
-        "lastModified": 1701558532,
-        "narHash": "sha256-ZyMkYQS8KBL4NuouzjzeTl71YJY+86DYYF5JCxSUGvg=",
-        "owner": "pyqlsa",
+        "lastModified": 1703044435,
+        "narHash": "sha256-H4wCE3snCBQVkiA4+r5VaUrd4bWOhF1lwafngGThm/c=",
+        "owner": "windwp",
         "repo": "nvim-autopairs",
-        "rev": "32d124716c89a0be1791d22c8f1fa2bdb3c311ff",
+        "rev": "9fd41181693dd4106b3e414a822bb6569924de81",
         "type": "github"
       },
       "original": {
-        "owner": "pyqlsa",
-        "ref": "ts_deprecate_query_get_node_text",
+        "owner": "windwp",
         "repo": "nvim-autopairs",
         "type": "github"
       }
