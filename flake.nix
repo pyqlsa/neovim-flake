@@ -12,13 +12,6 @@
       flake = false;
     };
 
-    # Langauge server (use master instead of nixpkgs)
-    rnix-lsp = {
-      url = "github:nix-community/rnix-lsp";
-      #inputs.nixpkgs.follows = "nixpkgs";
-      inputs.utils.follows = "flake-utils";
-    };
-
     # LSP plugins
     nvim-lspconfig = {
       url = "github:neovim/nvim-lspconfig";
@@ -178,7 +171,6 @@
           "nvim-treesitter"
           "nvim-treesitter-context"
           "nvim-lspconfig"
-          "rnix-lsp"
           "null-ls"
           "crates-nvim"
           "plenary-nvim"
@@ -210,9 +202,9 @@
 
         pluginOverlay = lib.buildPluginOverlay;
 
-        externalBitsOverlay = final: prev: {
-          rnix-lsp = inputs.rnix-lsp.defaultPackage.${final.system};
-        };
+        #externalPkgsOverlay = final: prev: {
+        #  <some-pkg> = inputs.<some-pkg>.defaultPackage.${final.system};
+        #};
 
         libOverlay = final: prev: {
           lib = prev.lib.extend (_: _: {
@@ -226,7 +218,7 @@
           overlays = [
             libOverlay
             pluginOverlay
-            externalBitsOverlay
+            #externalPkgsOverlay
           ];
         };
 

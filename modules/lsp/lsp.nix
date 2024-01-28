@@ -233,11 +233,18 @@ in
           }''}
 
         ${optionalString cfg.nix ''
-          -- Nix Config
-          lspconfig.rnix.setup{
+          -- Nix (nil) Config
+          lspconfig.nil_ls.setup{
             capabilities = capabilities,
             on_attach = on_attach,
-            cmd = {"${pkgs.rnix-lsp}/bin/rnix-lsp"}
+            cmd = {"${pkgs.nil}/bin/nil"},
+            settings = {
+              ['nil'] = {
+                formatting = {
+                  command = { "${pkgs.nixpkgs-fmt}/bin/nixpkgs-fmt" }
+                }
+              }
+            }
           }''}
 
         ${optionalString cfg.clang ''
