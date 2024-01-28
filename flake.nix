@@ -23,8 +23,8 @@
       flake = false;
     };
     nvim-treesitter = {
-      #url = "github:nvim-treesitter/nvim-treesitter/v0.9.0";
-      url = "github:nvim-treesitter/nvim-treesitter";
+      url = "github:nvim-treesitter/nvim-treesitter/v0.9.1";
+      #url = "github:nvim-treesitter/nvim-treesitter";
       flake = false;
     };
     nvim-treesitter-context = {
