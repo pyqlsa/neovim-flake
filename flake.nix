@@ -18,6 +18,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.flake-utils.follows = "flake-utils";
     };
+    efmls-configs-nvim = {
+      url = "github:creativenull/efmls-configs-nvim";
+      flake = false;
+    };
     nvim-treesitter = {
       #url = "github:nvim-treesitter/nvim-treesitter/v0.9.0";
       url = "github:nvim-treesitter/nvim-treesitter";
@@ -25,10 +29,6 @@
     };
     nvim-treesitter-context = {
       url = "github:nvim-treesitter/nvim-treesitter-context";
-      flake = false;
-    };
-    null-ls = {
-      url = "github:pyqlsa/null-ls.nvim";
       flake = false;
     };
     nvim-cmp = {
@@ -171,7 +171,7 @@
           "nvim-treesitter"
           "nvim-treesitter-context"
           "nvim-lspconfig"
-          "null-ls"
+          "efmls-configs-nvim"
           "crates-nvim"
           "plenary-nvim"
           "nvim-cmp"
