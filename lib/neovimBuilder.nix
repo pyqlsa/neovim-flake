@@ -3,10 +3,6 @@
 , ...
 }: { config }:
 let
-  neovimPlugins = pkgs.neovimPlugins;
-
-  neovimUnwrapped = pkgs.neovim-unwrapped;
-
   vimOptions = lib.evalModules {
     modules = [
       { imports = [ ../modules ]; }
@@ -20,13 +16,13 @@ let
 
   vim = vimOptions.config.vim;
 in
-pkgs.wrapNeovim neovimUnwrapped {
+pkgs.wrapNeovim pkgs.neovim-unwrapped {
   viAlias = vim.viAlias;
   vimAlias = vim.vimAlias;
   configure = {
     customRC = vim.configRC;
 
-    packages.vimPackage = with neovimPlugins; {
+    packages.vimPackage = with pkgs.neovimPlugins; {
       start = builtins.filter (f: f != null) vim.startPlugins;
       opt = vim.optPlugins;
     };

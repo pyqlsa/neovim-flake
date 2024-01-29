@@ -4,8 +4,6 @@
 , ...
 }:
 with builtins; rec {
-  inherit (pkgs.lib);
-
   # No longer needed for pseudo-formatting, but hard to let it go
   #smushString = val: pkgs.lib.concatStringsSep " " (pkgs.lib.remove "" (pkgs.lib.splitString " " (builtins.replaceStrings [ "\n" ] [ " " ] val)));
 

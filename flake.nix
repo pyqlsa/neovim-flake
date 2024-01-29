@@ -165,37 +165,37 @@
       system:
       let
         plugins = [
-          "nvim-cursorline"
-          "indent-blankline"
-          "nvim-web-devicons"
-          "nvim-treesitter"
-          "nvim-treesitter-context"
-          "nvim-lspconfig"
-          "efmls-configs-nvim"
-          "crates-nvim"
-          "plenary-nvim"
-          "nvim-cmp"
+          "bufferline"
+          "catppuccin-nvim"
           "cmp-buffer"
           "cmp-nvim-lsp"
           "cmp-vsnip"
           "cmp-path"
           "cmp-treesitter"
-          "lspkind"
-          "nvim-autopairs"
-          "nvim-ts-autotag"
-          "vim-vsnip"
-          "rust-tools"
-          "nvim-tree"
-          "vscode-nvim"
-          "nightfox-nvim"
-          "tokyonight-nvim"
-          "catppuccin-nvim"
-          "onedark-nvim"
-          "bufferline"
-          "nvim-comment"
-          "lualine"
-          "telescope"
+          "crates-nvim"
+          "efmls-configs-nvim"
           "glow-nvim"
+          "indent-blankline"
+          "lspkind"
+          "lualine"
+          "nightfox-nvim"
+          "nvim-autopairs"
+          "nvim-cmp"
+          "nvim-comment"
+          "nvim-cursorline"
+          "nvim-lspconfig"
+          "nvim-tree"
+          "nvim-treesitter"
+          "nvim-treesitter-context"
+          "nvim-ts-autotag"
+          "nvim-web-devicons"
+          "onedark-nvim"
+          "plenary-nvim"
+          "rust-tools"
+          "telescope"
+          "tokyonight-nvim"
+          "vim-vsnip"
+          "vscode-nvim"
         ];
 
         lib = import ./lib { inherit pkgs inputs plugins; };
@@ -233,6 +233,7 @@
               rust.enable = true;
               go = true;
               python = true;
+              sh = true;
               terraform = true;
             };
             vim.telescope = {

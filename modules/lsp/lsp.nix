@@ -25,7 +25,7 @@ in
     };
     python = mkEnableOption "Python LSP";
     clang = mkEnableOption "C Language LSP";
-    sql = mkEnableOption "SQL Language LSP";
+    sh = mkEnableOption "SH Language LSP";
     go = mkEnableOption "Go language LSP";
     ts = mkEnableOption "TS language LSP";
     terraform = mkEnableOption "Terraform LSP";
@@ -39,11 +39,6 @@ in
         (
           if config.vim.autocomplete.enable
           then cmp-nvim-lsp
-          else null
-        )
-        (
-          if cfg.sql
-          then sqls-nvim
           else null
         )
       ]
@@ -140,13 +135,18 @@ in
           capablities = require("cmp_nvim_lsp").default_capabilities(capabilities)''}
 
       --- EFM langserver
-      local languages = require('efmls-configs.defaults').languages()
-      -- extend languages example:
-      --languages = vim.tbl_extend('force', languages, {
-      --  rust = {
-      --    require('efmls-configs.formatters.rustfmt'),
-      --  },
-      --})
+      local languages = {
+      ${optionalString cfg.ts ''
+        typescript = {
+          require('efmls-configs.linters.eslint'),
+          require('efmls-configs.formatters.prettier'),
+        },''}
+      ${optionalString cfg.sh ''
+        sh = {
+          require('efmls-configs.linters.shellcheck'),
+          --require('efmls-configs.formatters.shfmt'),
+        },''}
+      }
       local efmls_config = {
         filetypes = vim.tbl_keys(languages),
         settings = {
@@ -219,17 +219,6 @@ in
           capabilities = capabilities,
           on_attach = default_on_attach,
           cmd = {"${pkgs.ccls}/bin/ccls"}
-        }''}
-
-      ${optionalString cfg.sql ''
-        --- SQLS Config
-        lspconfig.sqls.setup {
-          on_attach = function(client, bufnr)
-            client.server.capabilities.execute_command = true
-            on_attach(client, bufnr)
-            require("sqls").setup{}
-          end,
-          cmd = {"${pkgs.sqls}/bin/sqls", "-config", string.format("%s/config.yml", vim.fn.cwd())}
         }''}
 
       ${optionalString cfg.go ''

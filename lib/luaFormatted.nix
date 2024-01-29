@@ -4,7 +4,7 @@
 , ...
 }: file: text:
 with pkgs;
-stdenv.mkDerivation rec {
+stdenv.mkDerivation {
   name = file;
   nativeBuildInputs = [ stylua ];
   passAsFile = [ "luaData" ];
