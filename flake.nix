@@ -198,9 +198,9 @@
           "vscode-nvim"
         ];
 
-        lib = import ./lib { inherit pkgs inputs plugins; };
+        _lib = import ./lib { inherit pkgs inputs plugins; };
 
-        pluginOverlay = lib.buildPluginOverlay;
+        pluginOverlay = _lib.buildPluginOverlay;
 
         #externalPkgsOverlay = final: prev: {
         #  <some-pkg> = inputs.<some-pkg>.defaultPackage.${final.system};
@@ -208,7 +208,7 @@
 
         libOverlay = final: prev: {
           lib = prev.lib.extend (_: _: {
-            inherit (lib) boolToYesNo withPlugins luaFormatted;
+            inherit (_lib) boolToYesNo withPlugins luaFormatted;
           });
         };
 
@@ -259,7 +259,7 @@
           };
         };
 
-        neovimBuilder = theme: lib.neovimBuilder (pkgs.lib.recursiveUpdate machinery theme);
+        neovimBuilder = theme: _lib.neovimBuilder (pkgs.lib.recursiveUpdate machinery theme);
       in
       rec
       {
@@ -271,7 +271,7 @@
               program = "${packages.default}/bin/nvim";
             };
           }
-          // lib.allThemedApps "nvim" neovimBuilder;
+          // _lib.allThemedApps "nvim" neovimBuilder;
 
         devShells =
           rec {
@@ -280,7 +280,7 @@
               buildInputs = [ packages.default ];
             };
           }
-          // lib.allThemedShells "neovim" neovimBuilder;
+          // _lib.allThemedShells "neovim" neovimBuilder;
 
         overlays = rec {
           default = neovim;
@@ -289,15 +289,15 @@
               neovimPlugins = pkgs.neovimPlugins;
               neovimPQ = packages.default;
             }
-            // lib.allThemedPackages "neovimPQ" neovimBuilder;
+            // _lib.allThemedPackages "neovimPQ" neovimBuilder;
         };
 
         packages =
           rec {
             default = neovim;
-            neovim = neovimBuilder lib.defaultTheme;
+            neovim = neovimBuilder _lib.defaultTheme;
           }
-          // lib.allThemedPackages "neovim" neovimBuilder;
+          // _lib.allThemedPackages "neovim" neovimBuilder;
       }
     );
 }
