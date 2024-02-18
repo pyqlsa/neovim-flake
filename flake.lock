@@ -34,22 +34,6 @@
         "type": "github"
       }
     },
-    "plgin-nvim-treesitter-context": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1708132231,
-        "narHash": "sha256-hG9KmeIdJllf8JBHMe7PrDspv2FM5OorNyXJqmgELFc=",
-        "owner": "nvim-treesitter",
-        "repo": "nvim-treesitter-context",
-        "rev": "23b699ac40091d8c729f024b3f1400bc7e26e0c5",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nvim-treesitter",
-        "repo": "nvim-treesitter-context",
-        "type": "github"
-      }
-    },
     "plugin-bufferline-nvim": {
       "flake": false,
       "locked": {
@@ -384,23 +368,6 @@
         "type": "github"
       }
     },
-    "plugin-nvim-treesitter": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1691831669,
-        "narHash": "sha256-1Iuvq0hVQ7LyBYOkJ5d07NkwbGcR1K61ZZmAAA7ABGs=",
-        "owner": "nvim-treesitter",
-        "repo": "nvim-treesitter",
-        "rev": "63260da18bf273c76b8e2ea0db84eb901cab49ce",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nvim-treesitter",
-        "ref": "v0.9.1",
-        "repo": "nvim-treesitter",
-        "type": "github"
-      }
-    },
     "plugin-nvim-ts-autotag": {
       "flake": false,
       "locked": {
@@ -550,7 +517,6 @@
       "inputs": {
         "flake-utils": "flake-utils",
         "nixpkgs": "nixpkgs",
-        "plgin-nvim-treesitter-context": "plgin-nvim-treesitter-context",
         "plugin-bufferline-nvim": "plugin-bufferline-nvim",
         "plugin-catppuccin-nvim": "plugin-catppuccin-nvim",
         "plugin-cmp-buffer": "plugin-cmp-buffer",
@@ -571,7 +537,6 @@
         "plugin-nvim-cursorline": "plugin-nvim-cursorline",
         "plugin-nvim-lspconfig": "plugin-nvim-lspconfig",
         "plugin-nvim-tree-lua": "plugin-nvim-tree-lua",
-        "plugin-nvim-treesitter": "plugin-nvim-treesitter",
         "plugin-nvim-ts-autotag": "plugin-nvim-ts-autotag",
         "plugin-nvim-web-devicons": "plugin-nvim-web-devicons",
         "plugin-onedark-nvim": "plugin-onedark-nvim",

@@ -32,7 +32,7 @@ in
     mkIf cfg.enable
       {
         vim.startPlugins = with pkgs.vimPlugins; [
-          nvim-treesitter
+          nvim-treesitter.withAllGrammars
           (
             if cfg.autotagHtml
             then nvim-ts-autotag

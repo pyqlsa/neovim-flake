@@ -48,7 +48,13 @@ in
     optPlugins = mkOption {
       description = "List of plugins to optionally load";
       default = [ ];
-      type = with types; listOf package;
+      type = with types; listOf (nullOr package);
+    };
+
+    additionalPackages = mkOption {
+      description = "List of packages to add to the neovim path (e.g. when a plugin relies on an external binary)";
+      default = [ ];
+      type = with types; listOf (nullOr package);
     };
 
     globals = mkOption {

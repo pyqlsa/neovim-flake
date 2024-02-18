@@ -26,16 +26,16 @@
       flake = false;
     };
     # nix pkg available
-    plugin-nvim-treesitter = {
-      url = "github:nvim-treesitter/nvim-treesitter/v0.9.1";
-      #url = "github:nvim-treesitter/nvim-treesitter";
-      flake = false;
-    };
+    #plugin-nvim-treesitter = {
+    #  url = "github:nvim-treesitter/nvim-treesitter/v0.9.1";
+    #  #url = "github:nvim-treesitter/nvim-treesitter";
+    #  flake = false;
+    #};
     # nix pkg available
-    plgin-nvim-treesitter-context = {
-      url = "github:nvim-treesitter/nvim-treesitter-context";
-      flake = false;
-    };
+    #plgin-nvim-treesitter-context = {
+    #  url = "github:nvim-treesitter/nvim-treesitter-context";
+    #  flake = false;
+    #};
     # nix pkg available
     plugin-nvim-cmp = {
       url = "github:hrsh7th/nvim-cmp";

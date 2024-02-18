@@ -2,8 +2,10 @@
 , lib ? pkgs.lib
 , ...
 }: { config }:
+with lib;
+with builtins;
 let
-  vimOptions = lib.evalModules {
+  vimOptions = evalModules {
     modules = [
       { imports = [ ../modules ]; }
       config
@@ -15,16 +17,20 @@ let
   };
 
   vim = vimOptions.config.vim;
-in
-pkgs.wrapNeovim pkgs.neovim-unwrapped {
-  viAlias = vim.viAlias;
-  vimAlias = vim.vimAlias;
-  configure = {
-    customRC = vim.configRC;
 
-    packages.vimPackage = with pkgs.vimPlugins; {
-      start = builtins.filter (f: f != null) vim.startPlugins;
-      opt = vim.optPlugins;
-    };
+  neovimConfig = pkgs.neovimUtils.makeNeovimConfig {
+    inherit (vim) viAlias vimAlias;
+    customRC = vim.configRC;
+    plugins = (map (plugin: { inherit plugin; optional = false; }) (filter (f: f != null) vim.startPlugins))
+      ++ (map (plugin: { inherit plugin; optional = true; }) (filter (f: f != null) vim.optPlugins));
   };
-}
+in
+pkgs.wrapNeovimUnstable pkgs.neovim-unwrapped (neovimConfig // {
+  wrapperArgs = neovimConfig.wrapperArgs ++ (
+    let
+      binPath = with pkgs; makeBinPath ([ git ]
+        ++ (filter (f: f != null) vim.additionalPackages));
+    in
+    [ "--prefix" "PATH" ":" binPath ]
+  );
+})

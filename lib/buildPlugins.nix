@@ -2,57 +2,39 @@
 , inputs
 , ...
 }: final: prev:
+with lib;
+with builtins;
 let
   inherit (prev.vimUtils) buildVimPlugin;
 
-  treesitterGrammers = prev.tree-sitter.withPlugins (p: [
-    p.tree-sitter-c
-    p.tree-sitter-nix
-    p.tree-sitter-python
-    p.tree-sitter-rust
-    p.tree-sitter-markdown
-    p.tree-sitter-toml
-    p.tree-sitter-make
-    p.tree-sitter-html
-    p.tree-sitter-go
-    p.tree-sitter-json
-    p.tree-sitter-javascript
-    p.tree-sitter-css
-    p.tree-sitter-hcl
-    p.tree-sitter-lua
-    p.tree-sitter-regex
-    p.tree-sitter-yaml
-  ]);
-
-  fromInputs = with lib; inputs: prefix:
+  fromInputs = inputs: prefix:
     mapAttrs'
       (n: v: nameValuePair (removePrefix prefix n) { src = v; })
       (filterAttrs (n: _: hasPrefix prefix n) inputs);
 
-  rawPlugins = fromInputs inputs "plugin-";
+  pluginsFromInputs = fromInputs inputs "plugin-";
 
+  # in case we need to build treesitter grammars in the future:
+  # https://github.com/jordanisaacs/neovim-flake/blob/7bcc215d38226892849411721cfbc096fd7e4d2d/modules/build/default.nix#L109
   buildPlug = name:
     buildVimPlugin {
       pname = name;
       version = "master";
-      src = rawPlugins.${name}.src;
-      postPatch =
-        if (name == "nvim-treesitter")
-        then ''
-          rm -r parser
-          ln -s ${treesitterGrammers} parser
-        ''
-        else "";
+      src =
+        assert asserts.assertMsg (name != "nvim-treesitter")
+          "'buildPlug' can't build nvim-treesitter; use nvim-treesitter.withAllGrammars, or build a different way.";
+        pluginsFromInputs.${name}.src;
+      postPatch = "";
     };
 
   neovimPlugins =
-    builtins.listToAttrs
+    listToAttrs
       (map
         (name: {
           inherit name;
           value = buildPlug name;
         })
-        (builtins.attrNames rawPlugins));
+        (attrNames pluginsFromInputs));
 in
 {
   vimPlugins = prev.vimPlugins // neovimPlugins;
