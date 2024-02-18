@@ -19,7 +19,7 @@ with builtins; rec {
 
   neovimBuilder = import ./neovimBuilder.nix { inherit pkgs; };
 
-  buildPluginOverlay = import ./buildPlugin.nix { inherit pkgs inputs plugins; };
+  buildPluginOverlay = import ./buildPlugins.nix { inherit pkgs inputs plugins; };
 
   # Takes a filename and a string of lua text, and creates a formatted lua file
   # in the store with the given name; use like:
