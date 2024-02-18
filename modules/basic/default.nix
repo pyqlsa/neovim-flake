@@ -179,7 +179,7 @@ in
   };
 
   config = {
-    vim.startPlugins = with pkgs.neovimPlugins; [ plenary-nvim ];
+    vim.startPlugins = with pkgs.vimPlugins; [ plenary-nvim ];
 
     vim.startLuaConfigRC = ''
       ${optionalString cfg.mapLeaderSpace ''

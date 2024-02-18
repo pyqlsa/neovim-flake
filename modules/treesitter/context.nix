@@ -19,7 +19,7 @@ in
   config =
     mkIf (cfg.enable && cfg.context.enable)
       {
-        vim.startPlugins = with pkgs.neovimPlugins; [ nvim-treesitter-context ];
+        vim.startPlugins = with pkgs.vimPlugins; [ nvim-treesitter-context ];
 
         vim.luaConfigRC = ''
           -- Treesitter Context Config

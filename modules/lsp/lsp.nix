@@ -32,7 +32,7 @@ in
   };
 
   config = mkIf cfg.enable {
-    vim.startPlugins = with pkgs.neovimPlugins;
+    vim.startPlugins = with pkgs.vimPlugins;
       [
         nvim-lspconfig
         efmls-configs-nvim

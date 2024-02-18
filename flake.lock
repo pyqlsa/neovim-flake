@@ -194,7 +194,7 @@
         "type": "github"
       }
     },
-    "lspkind": {
+    "lspkind-nvim": {
       "flake": false,
       "locked": {
         "lastModified": 1704982040,
@@ -479,7 +479,7 @@
         "flake-utils": "flake-utils",
         "glow-nvim": "glow-nvim",
         "indent-blankline": "indent-blankline",
-        "lspkind": "lspkind",
+        "lspkind-nvim": "lspkind-nvim",
         "lualine": "lualine",
         "nightfox-nvim": "nightfox-nvim",
         "nixpkgs": "nixpkgs",

@@ -22,7 +22,7 @@ pkgs.wrapNeovim pkgs.neovim-unwrapped {
   configure = {
     customRC = vim.configRC;
 
-    packages.vimPackage = with pkgs.neovimPlugins; {
+    packages.vimPackage = with pkgs.vimPlugins; {
       start = builtins.filter (f: f != null) vim.startPlugins;
       opt = vim.optPlugins;
     };

@@ -19,7 +19,7 @@ in
   };
 
   config = mkIf (cfg.enable) {
-    vim.startPlugins = with pkgs.neovimPlugins; [
+    vim.startPlugins = with pkgs.vimPlugins; [
       nvim-cmp
       cmp-buffer
       cmp-vsnip

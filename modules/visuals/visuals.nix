@@ -82,7 +82,7 @@ in
       );
     in
     {
-      vim.startPlugins = with pkgs.neovimPlugins; [
+      vim.startPlugins = with pkgs.vimPlugins; [
         (
           if cfg.nvimWebDevicons.enable
           then nvim-web-devicons
@@ -90,7 +90,7 @@ in
         )
         (
           if cfg.lspkind.enable
-          then pkgs.neovimPlugins.lspkind
+          then lspkind-nvim
           else null
         )
         (

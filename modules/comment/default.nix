@@ -61,7 +61,7 @@ in
   config =
     mkIf cfg.enable
       {
-        vim.startPlugins = with pkgs.neovimPlugins; [ nvim-comment ];
+        vim.startPlugins = with pkgs.vimPlugins; [ nvim-comment ];
 
         vim.luaConfigRC = ''
           -- Comment setup and bindings

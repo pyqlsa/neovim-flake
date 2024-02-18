@@ -47,7 +47,7 @@ in
   };
 
   config = mkIf cfg.enable {
-    vim.startPlugins = with pkgs.neovimPlugins; (
+    vim.startPlugins = with pkgs.vimPlugins; (
       (withPlugins (cfg.name == "nightfox") [ nightfox-nvim ])
       ++ (withPlugins (cfg.name == "onedark") [ onedark-nvim ])
       ++ (withPlugins (cfg.name == "tokyonight") [ tokyonight-nvim ])

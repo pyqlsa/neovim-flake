@@ -38,8 +38,6 @@ let
         ''
         else "";
     };
-in
-{
   neovimPlugins =
     builtins.listToAttrs
       (map
@@ -48,4 +46,7 @@ in
           value = buildPlug name;
         })
         plugins);
+in
+{
+  vimPlugins = prev.vimPlugins // neovimPlugins;
 }

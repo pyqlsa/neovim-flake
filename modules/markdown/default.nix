@@ -18,7 +18,7 @@ in
   };
 
   config = mkIf cfg.enable {
-    vim.startPlugins = with pkgs.neovimPlugins; [ glow-nvim ];
+    vim.startPlugins = with pkgs.vimPlugins; [ glow-nvim ];
 
     vim.luaConfigRC = optionalString cfg.glow.enable ''
       -- Glow config

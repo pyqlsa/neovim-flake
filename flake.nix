@@ -59,7 +59,7 @@
       url = "github:hrsh7th/vim-vsnip";
       flake = false;
     };
-    lspkind = {
+    lspkind-nvim = {
       url = "github:onsails/lspkind.nvim";
       flake = false;
     };
@@ -286,7 +286,7 @@
           default = neovim;
           neovim = final: prev:
             {
-              neovimPlugins = pkgs.neovimPlugins;
+              vimPlugins = pkgs.vimPlugins;
               neovimPQ = packages.default;
             }
             // _lib.allThemedPackages "neovimPQ" neovimBuilder;

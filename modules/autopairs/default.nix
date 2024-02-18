@@ -25,9 +25,7 @@ in
   };
 
   config = mkIf cfg.enable {
-    vim.startPlugins = with pkgs.neovimPlugins; [
-      nvim-autopairs
-    ];
+    vim.startPlugins = with pkgs.vimPlugins; [ nvim-autopairs ];
 
     vim.luaConfigRC = ''
       -- Autopairs Config

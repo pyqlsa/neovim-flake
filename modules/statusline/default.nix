@@ -155,7 +155,7 @@ in
   config =
     mkIf cfg.enable
       {
-        vim.startPlugins = with pkgs.neovimPlugins; [ lualine ];
+        vim.startPlugins = with pkgs.vimPlugins; [ lualine ];
 
         vim.luaConfigRC = ''
           -- Lualine Config
