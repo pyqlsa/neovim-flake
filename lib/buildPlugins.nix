@@ -1,6 +1,5 @@
-{ pkgs
+{ lib
 , inputs
-, plugins
 , ...
 }: final: prev:
 let
@@ -25,11 +24,18 @@ let
     p.tree-sitter-yaml
   ]);
 
+  fromInputs = with lib; inputs: prefix:
+    mapAttrs'
+      (n: v: nameValuePair (removePrefix prefix n) { src = v; })
+      (filterAttrs (n: _: hasPrefix prefix n) inputs);
+
+  rawPlugins = fromInputs inputs "plugin-";
+
   buildPlug = name:
     buildVimPlugin {
       pname = name;
       version = "master";
-      src = builtins.getAttr name inputs;
+      src = rawPlugins.${name}.src;
       postPatch =
         if (name == "nvim-treesitter")
         then ''
@@ -38,6 +44,7 @@ let
         ''
         else "";
     };
+
   neovimPlugins =
     builtins.listToAttrs
       (map
@@ -45,7 +52,7 @@ let
           inherit name;
           value = buildPlug name;
         })
-        plugins);
+        (builtins.attrNames rawPlugins));
 in
 {
   vimPlugins = prev.vimPlugins // neovimPlugins;

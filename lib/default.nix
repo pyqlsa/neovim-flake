@@ -1,11 +1,11 @@
 { pkgs
+, lib ? pkgs.lib
 , inputs
-, plugins
 , ...
 }:
 with builtins; rec {
   # No longer needed for pseudo-formatting, but hard to let it go
-  #smushString = val: pkgs.lib.concatStringsSep " " (pkgs.lib.remove "" (pkgs.lib.splitString " " (builtins.replaceStrings [ "\n" ] [ " " ] val)));
+  #smushString = val: lib.concatStringsSep " " (lib.remove "" (lib.splitString " " (builtins.replaceStrings [ "\n" ] [ " " ] val)));
 
   boolToYesNo = cond:
     if cond
@@ -19,7 +19,7 @@ with builtins; rec {
 
   neovimBuilder = import ./neovimBuilder.nix { inherit pkgs; };
 
-  buildPluginOverlay = import ./buildPlugins.nix { inherit pkgs inputs plugins; };
+  buildPluginOverlay = import ./buildPlugins.nix { inherit lib inputs; };
 
   # Takes a filename and a string of lua text, and creates a formatted lua file
   # in the store with the given name; use like:
