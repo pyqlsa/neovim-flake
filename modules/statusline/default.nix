@@ -152,40 +152,38 @@ in
     };
   };
 
-  config =
-    mkIf cfg.enable
-      {
-        vim.startPlugins = with pkgs.vimPlugins; [ lualine-nvim ];
+  config = mkIf cfg.enable {
+    vim.startPlugins = with pkgs.vimPlugins; [ lualine-nvim ];
 
-        vim.luaConfigRC = ''
-          -- Lualine Config
-          require('lualine').setup({
-            options = {
-              icons_enabled = ${boolToString cfg.icons},
-              theme = "${cfg.theme}",
-              component_separators = {"${cfg.componentSeparator.left}","${cfg.componentSeparator.right}"},
-              section_separators = {"${cfg.sectionSeparator.left}","${cfg.sectionSeparator.right}"},
-              disabled_filetypes = {},
-            },
-            sections = {
-              lualine_a = ${cfg.activeSection.a},
-              lualine_b = ${cfg.activeSection.b},
-              lualine_c = ${cfg.activeSection.c},
-              lualine_x = ${cfg.activeSection.x},
-              lualine_y = ${cfg.activeSection.y},
-              lualine_z = ${cfg.activeSection.z},
-            },
-            inactive_sections = {
-              lualine_a = ${cfg.inactiveSection.a},
-              lualine_b = ${cfg.inactiveSection.b},
-              lualine_c = ${cfg.inactiveSection.c},
-              lualine_x = ${cfg.inactiveSection.x},
-              lualine_y = ${cfg.inactiveSection.y},
-              lualine_z = ${cfg.inactiveSection.z},
-            },
-            tabline = {},
-            extensions = {"${optionalString config.vim.nvimTree.enable "nvim-tree"}"},
-          })
-        '';
-      };
+    vim.luaConfigRC = ''
+      -- Lualine Config
+      require('lualine').setup({
+        options = {
+          icons_enabled = ${boolToString cfg.icons},
+          theme = "${cfg.theme}",
+          component_separators = {"${cfg.componentSeparator.left}","${cfg.componentSeparator.right}"},
+          section_separators = {"${cfg.sectionSeparator.left}","${cfg.sectionSeparator.right}"},
+          disabled_filetypes = {},
+        },
+        sections = {
+          lualine_a = ${cfg.activeSection.a},
+          lualine_b = ${cfg.activeSection.b},
+          lualine_c = ${cfg.activeSection.c},
+          lualine_x = ${cfg.activeSection.x},
+          lualine_y = ${cfg.activeSection.y},
+          lualine_z = ${cfg.activeSection.z},
+        },
+        inactive_sections = {
+          lualine_a = ${cfg.inactiveSection.a},
+          lualine_b = ${cfg.inactiveSection.b},
+          lualine_c = ${cfg.inactiveSection.c},
+          lualine_x = ${cfg.inactiveSection.x},
+          lualine_y = ${cfg.inactiveSection.y},
+          lualine_z = ${cfg.inactiveSection.z},
+        },
+        tabline = {},
+        extensions = {"${optionalString config.vim.nvimTree.enable "nvim-tree"}"},
+      })
+    '';
+  };
 }

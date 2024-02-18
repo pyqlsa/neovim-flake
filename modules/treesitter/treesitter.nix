@@ -28,56 +28,55 @@ in
     };
   };
 
-  config =
-    mkIf cfg.enable
-      {
-        vim.startPlugins = with pkgs.vimPlugins; [
-          nvim-treesitter.withAllGrammars
-          (
-            if cfg.autotagHtml
-            then nvim-ts-autotag
-            else null
-          )
-        ];
+  config = mkIf cfg.enable {
+    vim.startPlugins = with pkgs.vimPlugins; [
+      nvim-treesitter.withAllGrammars
+      (
+        if cfg.autotagHtml
+        then nvim-ts-autotag
+        else null
+      )
+    ];
+    vim.additionalPackages = with pkgs; [ tree-sitter git ];
 
-        vim.startLuaConfigRC = ''
-          -- Fix up the built-in Terraform detection
-          vim.filetype.add({
-            pattern = {
-              ['.*tf'] = { 'terraform', { priority = 10 } },
-            }
-          })
-        '';
+    vim.startLuaConfigRC = ''
+      -- Fix up the built-in Terraform detection
+      vim.filetype.add({
+        pattern = {
+          ['.*tf'] = { 'terraform', { priority = 10 } },
+        }
+      })
+    '';
 
-        vim.luaConfigRC = ''
-          ${optionalString cfg.fold ''
-            -- Treesitter based folding
-            vim.opt.foldmethod = "expr"
-            vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
-          ''}
-          -- Treesitter config
-          require('nvim-treesitter.configs').setup {
-            highlight = {
-                enable = true,
-                disable = {},
-            },
+    vim.luaConfigRC = ''
+      ${optionalString cfg.fold ''
+        -- Treesitter based folding
+        vim.opt.foldmethod = "expr"
+        vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
+      ''}
+      -- Treesitter config
+      require('nvim-treesitter.configs').setup {
+        highlight = {
+            enable = true,
+            disable = {},
+        },
 
-            incremental_selection = {
-              enable = true,
-              keymaps = {
-                init_selection = "gnn",
-                node_incremental = "grn",
-                scope_incremental = "grc",
-                node_decremental = "grm",
-              },
-            },
+        incremental_selection = {
+          enable = true,
+          keymaps = {
+            init_selection = "gnn",
+            node_incremental = "grn",
+            scope_incremental = "grc",
+            node_decremental = "grm",
+          },
+        },
 
-            ${optionalString cfg.autotagHtml ''
-            autotag = {
-              enable = true,
-            },
-          ''}
-          }
-        '';
-      };
+        ${optionalString cfg.autotagHtml ''
+        autotag = {
+          enable = true,
+        },
+      ''}
+      }
+    '';
+  };
 }

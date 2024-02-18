@@ -162,8 +162,7 @@
     # Navigation
     # nix pkg available
     plugin-nvim-tree-lua = {
-      url = "github:kyazdani42/nvim-tree.lua";
-      #url = "github:nvim-tree/nvim-tree.lua";
+      url = "github:nvim-tree/nvim-tree.lua";
       flake = false;
     };
 
@@ -207,7 +206,7 @@
 
         libOverlay = final: prev: {
           lib = prev.lib.extend (_: _: {
-            inherit (_lib) boolToYesNo withPlugins luaFormatted;
+            inherit (_lib) boolToYesNo optionalWithItems luaFormatted;
           });
         };
 

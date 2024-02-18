@@ -16,17 +16,15 @@ in
     };
   };
 
-  config =
-    mkIf (cfg.enable && cfg.context.enable)
-      {
-        vim.startPlugins = with pkgs.vimPlugins; [ nvim-treesitter-context ];
+  config = mkIf (cfg.enable && cfg.context.enable) {
+    vim.startPlugins = with pkgs.vimPlugins; [ nvim-treesitter-context ];
 
-        vim.luaConfigRC = ''
-          -- Treesitter Context Config
-          require('treesitter-context').setup {
-            enable = true,
-            max_lines = 0
-          }
-        '';
-      };
+    vim.luaConfigRC = ''
+      -- Treesitter Context Config
+      require('treesitter-context').setup {
+        enable = true,
+        max_lines = 0
+      }
+    '';
+  };
 }

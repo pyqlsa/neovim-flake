@@ -12,9 +12,9 @@ with builtins; rec {
     then "yes"
     else "no";
 
-  withPlugins = cond: plugs:
+  optionalWithItems = cond: items:
     if cond
-    then plugs
+    then items
     else [ ];
 
   neovimBuilder = import ./neovimBuilder.nix { inherit pkgs; };

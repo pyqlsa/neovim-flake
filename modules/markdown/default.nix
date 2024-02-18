@@ -19,11 +19,12 @@ in
 
   config = mkIf cfg.enable {
     vim.startPlugins = with pkgs.vimPlugins; [ glow-nvim ];
+    vim.additionalPackages = with pkgs; [ glow ];
 
     vim.luaConfigRC = optionalString cfg.glow.enable ''
       -- Glow config
       require('glow').setup({
-        glow_path = "${pkgs.glow}/bin/glow",
+        glow_path = "glow",
         border = "shadow",
         pager = false,
         width = 120,

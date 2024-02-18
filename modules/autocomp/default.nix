@@ -18,7 +18,7 @@ in
     };
   };
 
-  config = mkIf (cfg.enable) {
+  config = mkIf cfg.enable {
     vim.startPlugins = with pkgs.vimPlugins; [
       nvim-cmp
       cmp-buffer
@@ -26,6 +26,7 @@ in
       cmp-path
       cmp-treesitter
     ];
+
     vim.luaConfigRC = ''
       --- nvim-cmp settings
       local has_words_before = function()

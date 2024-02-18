@@ -355,15 +355,15 @@
     "plugin-nvim-tree-lua": {
       "flake": false,
       "locked": {
-        "lastModified": 1707727779,
-        "narHash": "sha256-N/MFJw2sqVCQ3l+w4minzrk3/pcZKZLg9y52PrXZjt0=",
-        "owner": "kyazdani42",
+        "lastModified": 1708237704,
+        "narHash": "sha256-Yi1bf24CcKNllJ6lm/BERJEkoFYDUDQGGjHlEDgaOiU=",
+        "owner": "nvim-tree",
         "repo": "nvim-tree.lua",
-        "rev": "863cf832ceb0b2377c913b7696dd7d64f4978941",
+        "rev": "d35a8d5ec6358ada4b058431b367b32360737466",
         "type": "github"
       },
       "original": {
-        "owner": "kyazdani42",
+        "owner": "nvim-tree",
         "repo": "nvim-tree.lua",
         "type": "github"
       }

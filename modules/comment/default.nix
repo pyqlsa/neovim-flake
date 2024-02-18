@@ -58,22 +58,20 @@ in
     };
   };
 
-  config =
-    mkIf cfg.enable
-      {
-        vim.startPlugins = with pkgs.vimPlugins; [ nvim-comment ];
+  config = mkIf cfg.enable {
+    vim.startPlugins = with pkgs.vimPlugins; [ nvim-comment ];
 
-        vim.luaConfigRC = ''
-          -- Comment setup and bindings
-          require('nvim_comment').setup({
-            marker_padding = ${boolToString cfg.markerPadding},
-            comment_empty = ${boolToString cfg.commentEmpty},
-            comment_empty_trim_whitespace = ${boolToString cfg.commentEmptyTrimWhitespace},
-            create_mappings = ${boolToString cfg.createMappings},
-            line_mapping = "${cfg.lineMapping}",
-            operator_mapping = "${cfg.operatorMapping}",
-            comment_chunkTextObject = "${cfg.commentChunkTextObject}",
-          })
-        '';
-      };
+    vim.luaConfigRC = ''
+      -- Comment setup and bindings
+      require('nvim_comment').setup({
+        marker_padding = ${boolToString cfg.markerPadding},
+        comment_empty = ${boolToString cfg.commentEmpty},
+        comment_empty_trim_whitespace = ${boolToString cfg.commentEmptyTrimWhitespace},
+        create_mappings = ${boolToString cfg.createMappings},
+        line_mapping = "${cfg.lineMapping}",
+        operator_mapping = "${cfg.operatorMapping}",
+        comment_chunkTextObject = "${cfg.commentChunkTextObject}",
+      })
+    '';
+  };
 }
