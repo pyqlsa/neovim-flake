@@ -37,7 +37,7 @@ in
   config =
     mkIf cfg.enable
       {
-        vim.startPlugins = with pkgs.vimPlugins; [ bufferline ];
+        vim.startPlugins = with pkgs.vimPlugins; [ bufferline-nvim ];
 
         vim.luaConfigRC = ''
           -- Bufferline Configuration with buffer navigation bindings

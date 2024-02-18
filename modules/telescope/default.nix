@@ -15,7 +15,7 @@ in
   config =
     mkIf cfg.enable
       {
-        vim.startPlugins = with pkgs.vimPlugins; [ telescope ];
+        vim.startPlugins = with pkgs.vimPlugins; [ telescope-nvim ];
 
         vim.luaConfigRC = ''
           -- Telescope Config

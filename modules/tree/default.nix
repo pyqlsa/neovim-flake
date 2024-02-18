@@ -119,9 +119,7 @@ in
   };
 
   config = mkIf cfg.enable {
-    vim.startPlugins = with pkgs.vimPlugins; [
-      nvim-tree
-    ];
+    vim.startPlugins = with pkgs.vimPlugins; [ nvim-tree-lua ];
 
     vim.luaConfigRC = ''
       -- Nvim Tree Config

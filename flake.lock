@@ -50,7 +50,7 @@
         "type": "github"
       }
     },
-    "plugin-bufferline": {
+    "plugin-bufferline-nvim": {
       "flake": false,
       "locked": {
         "lastModified": 1706526490,
@@ -210,7 +210,7 @@
         "type": "github"
       }
     },
-    "plugin-indent-blankline": {
+    "plugin-indent-blankline-nvim": {
       "flake": false,
       "locked": {
         "lastModified": 1707806353,
@@ -242,7 +242,7 @@
         "type": "github"
       }
     },
-    "plugin-lualine": {
+    "plugin-lualine-nvim": {
       "flake": false,
       "locked": {
         "lastModified": 1706181415,
@@ -368,7 +368,7 @@
         "type": "github"
       }
     },
-    "plugin-nvim-tree": {
+    "plugin-nvim-tree-lua": {
       "flake": false,
       "locked": {
         "lastModified": 1707727779,
@@ -465,7 +465,7 @@
         "type": "github"
       }
     },
-    "plugin-rust-tools": {
+    "plugin-rust-tools-nvim": {
       "flake": false,
       "locked": {
         "lastModified": 1704259376,
@@ -481,7 +481,7 @@
         "type": "github"
       }
     },
-    "plugin-telescope": {
+    "plugin-telescope-nvim": {
       "flake": false,
       "locked": {
         "lastModified": 1701167040,
@@ -551,7 +551,7 @@
         "flake-utils": "flake-utils",
         "nixpkgs": "nixpkgs",
         "plgin-nvim-treesitter-context": "plgin-nvim-treesitter-context",
-        "plugin-bufferline": "plugin-bufferline",
+        "plugin-bufferline-nvim": "plugin-bufferline-nvim",
         "plugin-catppuccin-nvim": "plugin-catppuccin-nvim",
         "plugin-cmp-buffer": "plugin-cmp-buffer",
         "plugin-cmp-nvim-lsp": "plugin-cmp-nvim-lsp",
@@ -561,23 +561,23 @@
         "plugin-crates-nvim": "plugin-crates-nvim",
         "plugin-efmls-configs-nvim": "plugin-efmls-configs-nvim",
         "plugin-glow-nvim": "plugin-glow-nvim",
-        "plugin-indent-blankline": "plugin-indent-blankline",
+        "plugin-indent-blankline-nvim": "plugin-indent-blankline-nvim",
         "plugin-lspkind-nvim": "plugin-lspkind-nvim",
-        "plugin-lualine": "plugin-lualine",
+        "plugin-lualine-nvim": "plugin-lualine-nvim",
         "plugin-nightfox-nvim": "plugin-nightfox-nvim",
         "plugin-nvim-autopairs": "plugin-nvim-autopairs",
         "plugin-nvim-cmp": "plugin-nvim-cmp",
         "plugin-nvim-comment": "plugin-nvim-comment",
         "plugin-nvim-cursorline": "plugin-nvim-cursorline",
         "plugin-nvim-lspconfig": "plugin-nvim-lspconfig",
-        "plugin-nvim-tree": "plugin-nvim-tree",
+        "plugin-nvim-tree-lua": "plugin-nvim-tree-lua",
         "plugin-nvim-treesitter": "plugin-nvim-treesitter",
         "plugin-nvim-ts-autotag": "plugin-nvim-ts-autotag",
         "plugin-nvim-web-devicons": "plugin-nvim-web-devicons",
         "plugin-onedark-nvim": "plugin-onedark-nvim",
         "plugin-plenary-nvim": "plugin-plenary-nvim",
-        "plugin-rust-tools": "plugin-rust-tools",
-        "plugin-telescope": "plugin-telescope",
+        "plugin-rust-tools-nvim": "plugin-rust-tools-nvim",
+        "plugin-telescope-nvim": "plugin-telescope-nvim",
         "plugin-tokyonight-nvim": "plugin-tokyonight-nvim",
         "plugin-vim-vsnip": "plugin-vim-vsnip",
         "plugin-vscode-nvim": "plugin-vscode-nvim"

@@ -46,7 +46,7 @@ in
         if cfg.rust.enable
         then [
           crates-nvim
-          rust-tools
+          rust-tools-nvim
         ]
         else [ ]
       );

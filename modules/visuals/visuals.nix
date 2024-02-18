@@ -100,7 +100,7 @@ in
         )
         (
           if cfg.indentBlankline.enable
-          then indent-blankline
+          then indent-blankline-nvim
           else null
         )
       ];
