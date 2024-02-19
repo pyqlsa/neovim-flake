@@ -33,18 +33,18 @@ in
 
   config = mkIf cfg.enable {
     vim.startPlugins = with pkgs.vimPlugins; [ nvim-lspconfig efmls-configs-nvim ]
-      ++ (optionalWithItems config.vim.autocomplete.enable [ cmp-nvim-lsp ])
-      ++ (optionalWithItems cfg.rust.enable [ crates-nvim rust-tools-nvim ]);
+      ++ (optionalItems config.vim.autocomplete.enable [ cmp-nvim-lsp ])
+      ++ (optionalItems cfg.rust.enable [ crates-nvim rust-tools-nvim ]);
 
     vim.additionalPackages = with pkgs; [ efm-langserver ]
-      ++ (optionalWithItems cfg.go [ gopls ])
-      ++ (optionalWithItems cfg.clang [ ccls ])
-      ++ (optionalWithItems cfg.nix [ nil nixpkgs-fmt ])
-      ++ (optionalWithItems cfg.python [ nodePackages.pyright ])
-      ++ (optionalWithItems cfg.rust.enable [ rust-analyzer ])
-      ++ (optionalWithItems cfg.sh [ shellcheck shfmt ])
-      ++ (optionalWithItems cfg.ts [ nodejs eslint_d prettierd nodePackages.typescript-language-server ])
-      ++ (optionalWithItems cfg.terraform [ terraform-ls ]);
+      ++ (optionalItems cfg.go [ gopls ])
+      ++ (optionalItems cfg.clang [ ccls ])
+      ++ (optionalItems cfg.nix [ nil nixpkgs-fmt ])
+      ++ (optionalItems cfg.python [ nodePackages.pyright ])
+      ++ (optionalItems cfg.rust.enable [ rust-analyzer ])
+      ++ (optionalItems cfg.sh [ shellcheck shfmt ])
+      ++ (optionalItems cfg.ts [ nodejs eslint_d prettierd nodePackages.typescript-language-server ])
+      ++ (optionalItems cfg.terraform [ terraform-ls ]);
 
     vim.luaConfigRC = ''
       ${optionalString cfg.rust.enable ''

@@ -82,10 +82,10 @@ in
 
   config = mkIf cfg.enable {
     vim.startPlugins = with pkgs.vimPlugins; [ ]
-      ++ (optionalWithItems cfg.nvimWebDevicons.enable [ nvim-web-devicons ])
-      ++ (optionalWithItems cfg.lspkind.enable [ lspkind-nvim ])
-      ++ (optionalWithItems cfg.cursorWordline.enable [ nvim-cursorline ])
-      ++ (optionalWithItems cfg.indentBlankline.enable [ indent-blankline-nvim ]);
+      ++ (optionalItems cfg.nvimWebDevicons.enable [ nvim-web-devicons ])
+      ++ (optionalItems cfg.lspkind.enable [ lspkind-nvim ])
+      ++ (optionalItems cfg.cursorWordline.enable [ nvim-cursorline ])
+      ++ (optionalItems cfg.indentBlankline.enable [ indent-blankline-nvim ]);
 
     vim.luaConfigRC = ''
       -- Visuals

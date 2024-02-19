@@ -12,7 +12,7 @@ with builtins; rec {
     then "yes"
     else "no";
 
-  optionalWithItems = cond: items:
+  optionalItems = cond: items:
     if cond
     then items
     else [ ];

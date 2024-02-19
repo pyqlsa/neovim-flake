@@ -48,11 +48,11 @@ in
 
   config = mkIf cfg.enable {
     vim.startPlugins = with pkgs.vimPlugins; (
-      (optionalWithItems (cfg.name == "nightfox") [ nightfox-nvim ])
-      ++ (optionalWithItems (cfg.name == "onedark") [ onedark-nvim ])
-      ++ (optionalWithItems (cfg.name == "tokyonight") [ tokyonight-nvim ])
-      ++ (optionalWithItems (cfg.name == "catppuccin") [ catppuccin-nvim ])
-      ++ (optionalWithItems (cfg.name == "vscode") [ vscode-nvim ])
+      (optionalItems (cfg.name == "nightfox") [ nightfox-nvim ])
+      ++ (optionalItems (cfg.name == "onedark") [ onedark-nvim ])
+      ++ (optionalItems (cfg.name == "tokyonight") [ tokyonight-nvim ])
+      ++ (optionalItems (cfg.name == "catppuccin") [ catppuccin-nvim ])
+      ++ (optionalItems (cfg.name == "vscode") [ vscode-nvim ])
     );
 
     vim.luaConfigRC =
