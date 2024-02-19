@@ -26,6 +26,7 @@ let
   };
 in
 pkgs.wrapNeovimUnstable pkgs.neovim-unwrapped (neovimConfig // {
+  withNodeJs = vim.lsp.ts;
   wrapperArgs = neovimConfig.wrapperArgs ++ (
     let
       binPath = with pkgs; makeBinPath ([ git ]

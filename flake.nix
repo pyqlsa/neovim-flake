@@ -227,12 +227,18 @@
             vim.lsp = {
               enable = true;
               formatOnSave = true;
+              clang = true;
               nix = true;
               rust.enable = true;
               go = true;
               python = true;
               sh = true;
+              ts = true;
               terraform = true;
+              haskell = true;
+              lua = true;
+              zig = true;
+              toml = true;
             };
             vim.telescope = {
               enable = true;

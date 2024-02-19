@@ -29,6 +29,10 @@ in
     go = mkEnableOption "Go language LSP";
     ts = mkEnableOption "TS language LSP";
     terraform = mkEnableOption "Terraform LSP";
+    haskell = mkEnableOption "Haskell LSP";
+    lua = mkEnableOption "Lua LSP";
+    zig = mkEnableOption "Zig LSP";
+    toml = mkEnableOption "Toml LSP";
   };
 
   config = mkIf cfg.enable {
@@ -37,14 +41,18 @@ in
       ++ (optionalItems cfg.rust.enable [ crates-nvim rust-tools-nvim ]);
 
     vim.additionalPackages = with pkgs; [ efm-langserver ]
-      ++ (optionalItems cfg.go [ gopls ])
-      ++ (optionalItems cfg.clang [ ccls ])
+      ++ (optionalItems cfg.go [ go-tools gofumpt gopls ])
+      ++ (optionalItems cfg.clang [ clang-tools ])
       ++ (optionalItems cfg.nix [ nil nixpkgs-fmt ])
       ++ (optionalItems cfg.python [ nodePackages.pyright ])
-      ++ (optionalItems cfg.rust.enable [ rust-analyzer ])
+      ++ (optionalItems cfg.rust.enable [ cargo rustc rustfmt rust-analyzer ])
       ++ (optionalItems cfg.sh [ shellcheck shfmt ])
       ++ (optionalItems cfg.ts [ nodejs eslint_d prettierd nodePackages.typescript-language-server ])
-      ++ (optionalItems cfg.terraform [ terraform-ls ]);
+      ++ (optionalItems cfg.terraform [ terraform-ls ])
+      ++ (optionalItems cfg.haskell [ ghc haskellPackages.cabal-fmt haskell-language-server ormolu ])
+      ++ (optionalItems cfg.lua [ lua-language-server ])
+      ++ (optionalItems cfg.zig [ zls ])
+      ++ (optionalItems cfg.toml [ taplo ]);
 
     vim.luaConfigRC = ''
       ${optionalString cfg.rust.enable ''
@@ -142,6 +150,10 @@ in
           require('efmls-configs.linters.shellcheck'),
           require('efmls-configs.formatters.shfmt'),
         },''}
+      ${optionalString cfg.toml ''
+        toml = {
+          require('efmls-configs.formatters.taplo'),
+        },''}
       }
       local efmls_config = {
         filetypes = vim.tbl_keys(languages),
@@ -158,7 +170,7 @@ in
       lspconfig.efm.setup(vim.tbl_extend('force', efmls_config, {
         capabilities = capabilities,
         on_attach = default_on_attach,
-        cmd = {"efm-langserver"}
+        cmd = {"efm-langserver"},
       }))
 
       ${optionalString cfg.rust.enable ''
@@ -172,7 +184,7 @@ in
             hover_with_actions = false,
             inlay_hints = {
               only_current_line = false,
-            }
+            },
           },
           server = {
             capabilities = capabilities,
@@ -180,8 +192,8 @@ in
             cmd = {"rust-analyzer"},
             settings = {
               ["rust-analyzer"] = rustAnalyzerOpts,
-            }
-          }
+            },
+          },
         }
         require("crates").setup{}
         require("rust-tools").setup(rustopts)''}
@@ -191,7 +203,7 @@ in
         lspconfig.pyright.setup{
           capabilities = capabilities,
           on_attach = default_on_attach,
-          cmd = {"pyright-langserver", "--stdio"}
+          cmd = {"pyright-langserver", "--stdio"},
         }''}
 
       ${optionalString cfg.nix ''
@@ -203,18 +215,17 @@ in
           settings = {
             ['nil'] = {
               formatting = {
-                command = { "nixpkgs-fmt" }
-              }
-            }
-          }
+                command = { "nixpkgs-fmt" },
+              },
+            },
+          },
         }''}
 
       ${optionalString cfg.clang ''
-        -- CCLS (clang) Config
-        lspconfig.ccls.setup{
+        -- Clang Config
+        lspconfig.clangd.setup{
           capabilities = capabilities,
           on_attach = default_on_attach,
-          cmd = {"ccls"}
         }''}
 
       ${optionalString cfg.go ''
@@ -222,7 +233,13 @@ in
         lspconfig.gopls.setup {
           capabilities = capabilities,
           on_attach = default_on_attach,
-          cmd = {"gopls", "serve"}
+          cmd = {"gopls", "serve"},
+          settings = {
+            gopls = {
+              gofumpt = true,
+              staticcheck = true,
+            },
+          },
         }
 
         function go_org_imports(wait_ms)
@@ -250,8 +267,8 @@ in
         -- TS config
         lspconfig.tsserver.setup {
           capabilities = capabilities,
-          on_attach = on_attach
-          cmd = {"typescript-language-server", "--stdio"}
+          on_attach = on_attach,
+          cmd = {"typescript-language-server", "--stdio"},
         }''}
 
       ${optionalString cfg.terraform ''
@@ -259,7 +276,36 @@ in
         lspconfig.terraformls.setup {
           capabilities = capabilities,
           on_attach = on_attach,
-          cmd = {"terraform-ls", "serve"}
+          cmd = {"terraform-ls", "serve"},
+        }''}
+
+      ${optionalString cfg.haskell ''
+        -- Haskell config
+        lspconfig.hls.setup{
+          capabilities = capabilities,
+          on_attach = default_on_attach,
+        }''}
+
+      ${optionalString cfg.lua ''
+        -- Lua config
+        lspconfig.lua_ls.setup{
+          capabilities = capabilities,
+          on_attach = default_on_attach,
+          settings = {
+            Lua = {
+              runtime = { version = "LuaJIT" },
+              diagnostics = { globals = { "vim" } },
+              workspace = { library = vim.api.nvim_get_runtime_file("", true), checkThirdParty = false },
+              telemetry = { enable = false },
+            },
+          },
+        }''}
+
+      ${optionalString cfg.zig ''
+        -- Zig config
+        lspconfig.zls.setup{
+          capabilities = capabilities,
+          on_attach = default_on_attach,
         }''}
     '';
   };
