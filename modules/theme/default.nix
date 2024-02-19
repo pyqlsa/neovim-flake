@@ -13,16 +13,10 @@ with builtins; let
 in
 {
   options.vim.theme = {
-    enable = mkOption {
-      type = types.bool;
-      description = "Enable Theme";
-      default = true;
-    };
-
     name = mkOption {
-      type = types.enum [ "nightfox" "onedark" "tokyonight" "catppuccin" "vscode" ];
-      description = ''Name of theme to use: "nightfox" "onedark" "tokyonight" "catppuccin" "vscode"'';
-      default = "nightfox";
+      type = types.enum [ "nightfox" "onedark" "tokyonight" "catppuccin" "rose-pine" "none" ];
+      description = ''Name of theme to use: "nightfox" "onedark" "tokyonight" "catppuccin" "rose-pine" "none"'';
+      default = "none";
     };
 
     style = mkOption {
@@ -32,11 +26,12 @@ in
           od = enum' "onedark" [ "dark" "darker" "cool" "deep" "warm" "warmer" ];
           tn = enum' "tokyonight" [ "day" "night" "storm" "moon" ];
           cp = enum' "catppuccin" [ "frappe" "latte" "macchiato" "mocha" ];
-          vs = types.enum [ "dark" "light" ];
+          rp = enum' "rose-pine" [ "main" "moon" "dawn" ];
+          none = types.enum [ "none" ];
         in
-        nf (od (tn (cp vs)));
+        nf (od (tn (cp (rp none))));
       description = ''Theme style associaed with the chosen theme: "carbonfox", "darker", "night", "mocha", "dark", etc.'';
-      default = "carbonfox";
+      default = "none";
     };
 
     transparency = mkOption {
@@ -46,18 +41,24 @@ in
     };
   };
 
-  config = mkIf cfg.enable {
+  config = {
     vim.startPlugins = with pkgs.vimPlugins; (
       (optionalItems (cfg.name == "nightfox") [ nightfox-nvim ])
       ++ (optionalItems (cfg.name == "onedark") [ onedark-nvim ])
       ++ (optionalItems (cfg.name == "tokyonight") [ tokyonight-nvim ])
       ++ (optionalItems (cfg.name == "catppuccin") [ catppuccin-nvim ])
-      ++ (optionalItems (cfg.name == "vscode") [ vscode-nvim ])
+      ++ (optionalItems (cfg.name == "rose-pine") [ rose-pine ])
     );
 
     vim.luaConfigRC =
       let
         themeConfigs = {
+          "none" = ''
+            -- No Theme (use a tolerable builtin instead)
+            vim.cmd("set background=dark")
+            vim.cmd("colorscheme lunaperche")
+          '';
+
           "nightfox" = ''
             -- Nightfox Theme
             require('${cfg.name}').setup({
@@ -96,12 +97,15 @@ in
             vim.cmd("colorscheme ${cfg.name}")
           '';
 
-          "vscode" = ''
-            -- VScode Theme
-            vim.o.background = "${cfg.style}"
+          "rose-pine" = ''
+            -- Rose-Pine Theme
             require('${cfg.name}').setup({
-              transparent = ${boolToString cfg.transparency},
+              variant = "${cfg.style}",
+              styles = {
+                transparency = ${boolToString cfg.transparency},
+              },
             })
+            vim.cmd("colorscheme ${cfg.name}")
           '';
         };
       in

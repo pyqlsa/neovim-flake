@@ -432,6 +432,22 @@
         "type": "github"
       }
     },
+    "plugin-rose-pine": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1707926298,
+        "narHash": "sha256-Zukzbs5ZQUjWutZK0oc1VHqFmUbvzWKtu6hb9EDFl9Y=",
+        "owner": "rose-pine",
+        "repo": "neovim",
+        "rev": "f977eeba34b030b37f93ece2fbd792477606203b",
+        "type": "github"
+      },
+      "original": {
+        "owner": "rose-pine",
+        "repo": "neovim",
+        "type": "github"
+      }
+    },
     "plugin-rust-tools-nvim": {
       "flake": false,
       "locked": {
@@ -497,22 +513,6 @@
         "type": "github"
       }
     },
-    "plugin-vscode-nvim": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1706782101,
-        "narHash": "sha256-dAZy4XWGljMn+FwvkZSHCL1neGRPLHVn/L0jSLmRAdM=",
-        "owner": "mofiqul",
-        "repo": "vscode.nvim",
-        "rev": "380c1068612b1bfbe35d70a4f2e58be5030a0707",
-        "type": "github"
-      },
-      "original": {
-        "owner": "mofiqul",
-        "repo": "vscode.nvim",
-        "type": "github"
-      }
-    },
     "root": {
       "inputs": {
         "flake-utils": "flake-utils",
@@ -541,11 +541,11 @@
         "plugin-nvim-web-devicons": "plugin-nvim-web-devicons",
         "plugin-onedark-nvim": "plugin-onedark-nvim",
         "plugin-plenary-nvim": "plugin-plenary-nvim",
+        "plugin-rose-pine": "plugin-rose-pine",
         "plugin-rust-tools-nvim": "plugin-rust-tools-nvim",
         "plugin-telescope-nvim": "plugin-telescope-nvim",
         "plugin-tokyonight-nvim": "plugin-tokyonight-nvim",
-        "plugin-vim-vsnip": "plugin-vim-vsnip",
-        "plugin-vscode-nvim": "plugin-vscode-nvim"
+        "plugin-vim-vsnip": "plugin-vim-vsnip"
       }
     },
     "systems": {

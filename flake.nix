@@ -123,8 +123,8 @@
     #  flake = false;
     #};
     # nix pkg available
-    plugin-vscode-nvim = {
-      url = "github:mofiqul/vscode.nvim";
+    plugin-rose-pine = {
+      url = "github:rose-pine/neovim";
       flake = false;
     };
     # nix pkg available
