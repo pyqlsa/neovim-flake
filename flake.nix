@@ -249,13 +249,13 @@
             vim.keyMaps = [
               {
                 mode = "'n'";
-                lhs = "'<C-i>'";
+                lhs = "'<Tab>'";
                 rhs = "':bprevious<cr>'";
                 options = "{ noremap = true, silent = true }";
               }
               {
                 mode = "'n'";
-                lhs = "'<C-o>'";
+                lhs = "'<S-Tab>'";
                 rhs = "':bnext<cr>'";
                 options = "{ noremap = true, silent = true }";
               }
