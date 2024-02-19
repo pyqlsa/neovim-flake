@@ -78,7 +78,7 @@ in
     preventJunkFiles = mkOption {
       type = types.bool;
       description = "Prevent swapfile, backupfile from being created";
-      default = false;
+      default = true;
     };
 
     tabWidth = mkOption {
