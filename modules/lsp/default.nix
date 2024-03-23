@@ -126,7 +126,29 @@ in
             callback = function ()
               vim.lsp.buf.format({async = false})
             end,
-          })''}
+          })
+
+        local toggle_format_on_save = function()
+          local ignoring_buf_write_pre = false
+
+          for _, event in pairs(vim.opt.eventignore:get()) do
+            if event == "BufWritePre" then
+              ignoring_buf_write_pre = true
+            end
+          end
+
+          if ignoring_buf_write_pre then
+            vim.opt.eventignore:remove({ "BufWritePre" })
+            vim.print("enabled format on save")
+          else
+            vim.opt.eventignore:append({ "BufWritePre" })
+            vim.print("disabled format on save")
+          end
+        end
+
+        vim.api.nvim_create_user_command("ToggleFormatOnSave", toggle_format_on_save, { desc = "Toggle format on save" })
+        vim.keymap.set("n", "<leader>t", toggle_format_on_save, { desc = "Toggle format on save" })
+      ''}
 
       default_on_attach = function(client, bufnr)
         on_attach(client, bufnr)
