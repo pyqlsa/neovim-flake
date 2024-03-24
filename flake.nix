@@ -189,119 +189,119 @@
   };
 
   outputs =
-    { nixpkgs
+    { self
+    , nixpkgs
     , flake-utils
     , ...
     } @ inputs:
-    flake-utils.lib.eachDefaultSystem (
-      system:
-      let
-        _lib = import ./lib { inherit pkgs inputs; };
-
-        pluginOverlay = _lib.buildPluginOverlay;
-
-        #externalPkgsOverlay = final: prev: {
-        #  <some-pkg> = inputs.<some-pkg>.defaultPackage.${final.system};
-        #};
-
-        libOverlay = final: prev: {
-          lib = prev.lib.extend (_: _: {
-            inherit (_lib) boolToYesNo optionalItems luaFormatted;
-          });
-        };
-
-        pkgs = import nixpkgs {
-          inherit system;
-          config = { allowUnfree = true; };
-          overlays = [
-            libOverlay
-            pluginOverlay
-            #externalPkgsOverlay
+    let
+      machinery = {
+        config = {
+          vim.autocomplete.enable = true;
+          vim.autopairs.enable = true;
+          vim.lsp = {
+            enable = true;
+            formatOnSave = true;
+            clang = true;
+            nix = true;
+            rust.enable = true;
+            go = true;
+            python = true;
+            sh = true;
+            ts = true;
+            terraform = true;
+            haskell = true;
+            lua = true;
+            zig = true;
+            toml = true;
+          };
+          vim.telescope = {
+            enable = true;
+          };
+          vim.markdown = {
+            enable = true;
+          };
+          vim.keyMaps = [
+            {
+              mode = "'n'";
+              lhs = "'<Tab>'";
+              rhs = "':bprevious<cr>'";
+              options = "{ noremap = true, silent = true }";
+            }
+            {
+              mode = "'n'";
+              lhs = "'<S-Tab>'";
+              rhs = "':bnext<cr>'";
+              options = "{ noremap = true, silent = true }";
+            }
           ];
         };
+      };
 
-        machinery = {
-          config = {
-            vim.autocomplete.enable = true;
-            vim.autopairs.enable = true;
-            vim.lsp = {
-              enable = true;
-              formatOnSave = true;
-              clang = true;
-              nix = true;
-              rust.enable = true;
-              go = true;
-              python = true;
-              sh = true;
-              ts = true;
-              terraform = true;
-              haskell = true;
-              lua = true;
-              zig = true;
-              toml = true;
+      _lib = import ./lib { inherit inputs; lib = nixpkgs.lib; };
+
+      pluginOverlay = _lib.pluginOverlayBuilder;
+
+      #externalPkgsOverlay = final: prev: {
+      #  <some-pkg> = inputs.<some-pkg>.defaultPackage.${final.system};
+      #};
+
+      libOverlay = final: prev: {
+        lib = prev.lib.extend
+          (_: _: {
+            inherit (_lib) boolToYesNo optionalItems;
+            luaFormatted = _lib.luaFormatted {
+              pkgs = prev;
+              lib = prev.lib;
+              stdenv = prev.stdenv;
             };
-            vim.telescope = {
-              enable = true;
-            };
-            vim.markdown = {
-              enable = true;
-            };
-            vim.keyMaps = [
-              {
-                mode = "'n'";
-                lhs = "'<Tab>'";
-                rhs = "':bprevious<cr>'";
-                options = "{ noremap = true, silent = true }";
-              }
-              {
-                mode = "'n'";
-                lhs = "'<S-Tab>'";
-                rhs = "':bnext<cr>'";
-                options = "{ noremap = true, silent = true }";
-              }
-            ];
-          };
+          });
+      };
+
+      mkNeovimPkg = ps: theme: _lib.neovimBuilder { pkgs = ps; } (ps.lib.recursiveUpdate machinery theme);
+    in
+    {
+      overlays = rec {
+        default = neovim;
+        neovim = nixpkgs.lib.composeManyExtensions [
+          libOverlay
+          pluginOverlay
+          #externalPkgsOverlay
+          (final: prev: {
+            neovimPQ = mkNeovimPkg prev _lib.defaultTheme;
+          } // _lib.allThemedPackages "neovimPQ" prev mkNeovimPkg)
+        ];
+      };
+    } // (flake-utils.lib.eachDefaultSystem (system:
+    let
+      pkgs = import nixpkgs {
+        inherit system;
+        config = { allowUnfree = true; };
+        overlays = [
+          self.overlays.default
+        ];
+      };
+    in
+    rec
+    {
+      apps = rec {
+        default = nvim;
+        nvim = {
+          type = "app";
+          program = "${packages.default}/bin/nvim";
         };
+      } // _lib.allThemedApps "nvim" pkgs mkNeovimPkg;
 
-        neovimBuilder = theme: _lib.neovimBuilder (pkgs.lib.recursiveUpdate machinery theme);
-      in
-      rec
-      {
-        apps =
-          rec {
-            default = nvim;
-            nvim = {
-              type = "app";
-              program = "${packages.default}/bin/nvim";
-            };
-          }
-          // _lib.allThemedApps "nvim" neovimBuilder;
-
-        devShells =
-          rec {
-            default = neovim;
-            neovim = pkgs.mkShell {
-              buildInputs = [ packages.default ];
-            };
-          }
-          // _lib.allThemedShells "neovim" neovimBuilder;
-
-        overlays = rec {
-          default = neovim;
-          neovim = final: prev:
-            {
-              vimPlugins = pkgs.vimPlugins;
-              neovimPQ = packages.default;
-            }
-            // _lib.allThemedPackages "neovimPQ" neovimBuilder;
+      devShells = rec {
+        default = neovim;
+        neovim = pkgs.mkShell {
+          buildInputs = [ packages.default ];
         };
+      } // _lib.allThemedShells "neovim" pkgs mkNeovimPkg;
 
-        packages =
-          rec {
-            default = neovim;
-            neovim = neovimBuilder _lib.defaultTheme;
-          }
-          // _lib.allThemedPackages "neovim" neovimBuilder;
-      }
-    );
+      packages = rec {
+        default = neovim;
+        neovim = mkNeovimPkg pkgs _lib.defaultTheme;
+      } // _lib.allThemedPackages "neovim" pkgs mkNeovimPkg;
+    }));
 }

@@ -1,5 +1,4 @@
-{ pkgs
-, lib ? pkgs.lib
+{ lib
 , inputs
 , ...
 }:
@@ -17,9 +16,9 @@ with builtins; rec {
     then items
     else [ ];
 
-  neovimBuilder = import ./neovimBuilder.nix { inherit pkgs; };
+  neovimBuilder = import ./neovimBuilder.nix;
 
-  buildPluginOverlay = import ./buildPlugins.nix { inherit lib inputs; };
+  pluginOverlayBuilder = import ./pluginOverlayBuilder.nix { inherit lib inputs; };
 
   # Takes a filename and a string of lua text, and creates a formatted lua file
   # in the store with the given name; use like:
@@ -28,20 +27,17 @@ with builtins; rec {
   #   luaInit = "${luaFormatted "init.lua" ''<some lua text>''}/init.lua";
   # or
   #   luaFoo = "${luaFormatted "foo/bar.lua" ''<some lua text>''}/foo/bar.lua";
-  luaFormatted = import ./luaFormatted.nix {
-    inherit pkgs;
-    inherit (pkgs) lib stdenv;
-  };
+  luaFormatted = import ./luaFormatted.nix;
 
   allThemes = import ./themes.nix;
   defaultTheme = allThemes.default;
 
   # helper for generating flake outputs
-  themedPackages = themes: wrapper: key: builder:
+  themedPackages = themes: wrapper: key: ps: builder:
     foldl'
       (cur: nxt:
         let
-          chunk = wrapper (builder themes."${nxt}");
+          chunk = wrapper ps (builder ps themes."${nxt}");
           ret =
             if ("${nxt}" == "default")
             then {
@@ -57,13 +53,13 @@ with builtins; rec {
         themes);
 
   # package-specific wrapper for flake output generator
-  packageWrapper = p: p;
+  packageWrapper = _: p: p;
 
   # generate package outputs for all supported themes, just pass a key and a builder
   allThemedPackages = themedPackages allThemes packageWrapper;
 
   # app-specific wrapper for flake output generator
-  appWrapper = p: {
+  appWrapper = _: p: {
     type = "app";
     program = "${p}/bin/nvim";
   };
@@ -72,8 +68,8 @@ with builtins; rec {
   allThemedApps = themedPackages allThemes appWrapper;
 
   # devShell-specific wrapper for flake output generator
-  devShellWrapper = p:
-    pkgs.mkShell {
+  devShellWrapper = ps: p:
+    ps.mkShell {
       buildInputs = [ p ];
     };
 
