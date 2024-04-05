@@ -76,9 +76,9 @@ in
       ${optionalString cfg.nix ''
         -- LSP Nix
         local nix_setup = function()
-          vim.bo.tabstop = 2
-          vim.bo.shiftwidth = 2
-          vim.bo.softtabstop = 2
+          vim.bo.tabstop = ${toString config.vim.tabWidth}
+          vim.bo.shiftwidth = ${toString config.vim.tabWidth}
+          vim.bo.softtabstop = ${toString config.vim.tabWidth}
         end
         vim.api.nvim_create_autocmd("FileType", { match = nix, callback = nix_setup })''}
 
