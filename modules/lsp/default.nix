@@ -44,7 +44,7 @@ in
       ++ (optionalItems cfg.go [ go-tools gofumpt gopls ])
       ++ (optionalItems cfg.clang [ clang-tools ])
       ++ (optionalItems cfg.nix [ nil nixpkgs-fmt ])
-      ++ (optionalItems cfg.python [ nodePackages.pyright ])
+      ++ (optionalItems cfg.python [ nodejs nodePackages.pyright ruff ])
       ++ (optionalItems cfg.rust.enable [ cargo rustc rustfmt rust-analyzer ])
       ++ (optionalItems cfg.sh [ shellcheck shfmt ])
       ++ (optionalItems cfg.ts [ nodejs eslint_d prettierd nodePackages.typescript-language-server ])
@@ -170,7 +170,12 @@ in
       ${optionalString cfg.sh ''
         sh = {
           require('efmls-configs.linters.shellcheck'),
-          require('efmls-configs.formatters.shfmt'),
+          { formatCommand = "shfmt -ci -s -bn -i ${toString config.vim.tabWidth}", formatStdin = true },
+        },''}
+      ${optionalString cfg.python ''
+        python = {
+          require('efmls-configs.linters.ruff'),
+          require('efmls-configs.formatters.ruff'),
         },''}
       ${optionalString cfg.toml ''
         toml = {
