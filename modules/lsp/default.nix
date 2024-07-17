@@ -44,7 +44,7 @@ in
       ++ (optionalItems cfg.go [ go-tools gofumpt gopls ])
       ++ (optionalItems cfg.clang [ clang-tools ])
       ++ (optionalItems cfg.nix [ nil nixpkgs-fmt ])
-      ++ (optionalItems cfg.python [ nodejs nodePackages.pyright ruff ])
+      ++ (optionalItems cfg.python [ nodejs pyright ruff ])
       ++ (optionalItems cfg.rust.enable [ cargo rustc rustfmt rust-analyzer ])
       ++ (optionalItems cfg.sh [ shellcheck shfmt ])
       ++ (optionalItems cfg.ts [ nodejs eslint_d prettierd nodePackages.typescript-language-server ])
