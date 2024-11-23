@@ -18,7 +18,6 @@
     plugin-nvim-lspconfig = {
       url = "github:neovim/nvim-lspconfig";
       inputs.nixpkgs.follows = "nixpkgs";
-      inputs.flake-utils.follows = "flake-utils";
     };
     # nix pkg available
     plugin-efmls-configs-nvim = {
