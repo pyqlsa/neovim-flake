@@ -73,7 +73,7 @@ in
     let
       filterNonNull = mappings: filterAttrs (name: value: value != null) mappings;
       globalSettings =
-        mapAttrsFlatten (name: value: "vim.g.${name} = ${value}")
+        attrsets.mapAttrsToList (name: value: "vim.g.${name} = ${value}")
           (filterNonNull cfg.globals);
 
       keyboardBindings = (

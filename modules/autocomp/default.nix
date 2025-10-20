@@ -39,6 +39,8 @@ in
       end
 
       local cmp = require("cmp")
+      --- local cmp_path = require("cmp_path")
+      --- local cmp_vsnip = require("cmp_vsnip")
       cmp.setup({
         snippet = {
           expand = function(args)
@@ -48,7 +50,7 @@ in
 
         sources = {
           ${optionalString (config.vim.lsp.enable) "{ name = 'nvim_lsp' },"}
-          ${optionalString (config.vim.lsp.rust.enable) "{ name = 'crates' },"}
+          ${optionalString (config.vim.lsp.rust) "{ name = 'crates' },"}
           { name = 'vsnip' },
           { name = 'treesitter' },
           { name = 'path' },

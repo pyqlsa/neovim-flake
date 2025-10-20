@@ -12,17 +12,7 @@ in
     enable = mkEnableOption "neovim lsp support";
     formatOnSave = mkEnableOption "Format on save";
     nix = mkEnableOption "Nix LSP";
-    rust = {
-      enable = mkEnableOption "Rust LSP";
-      rustAnalyzerOpts = mkOption {
-        type = types.str;
-        default = ''
-          experimental = {
-              procAttrMacros = true,
-            }'';
-        description = "options to pass to rust analyzer";
-      };
-    };
+    rust = mkEnableOption "Rust LSP";
     python = mkEnableOption "Python LSP";
     clang = mkEnableOption "C Language LSP";
     sh = mkEnableOption "SH Language LSP";
@@ -38,14 +28,14 @@ in
   config = mkIf cfg.enable {
     vim.startPlugins = with pkgs.vimPlugins; [ nvim-lspconfig efmls-configs-nvim ]
       ++ (optionalItems config.vim.autocomplete.enable [ cmp-nvim-lsp ])
-      ++ (optionalItems cfg.rust.enable [ crates-nvim rust-tools-nvim ]);
+      ++ (optionalItems cfg.rust [ crates-nvim ]);
 
     vim.additionalPackages = with pkgs; [ efm-langserver ]
       ++ (optionalItems cfg.go [ go-tools gofumpt gopls ])
       ++ (optionalItems cfg.clang [ clang-tools ])
       ++ (optionalItems cfg.nix [ nil nixpkgs-fmt ])
       ++ (optionalItems cfg.python [ nodejs pyright ruff ])
-      ++ (optionalItems cfg.rust.enable [ cargo rustc rustfmt rust-analyzer ])
+      ++ (optionalItems cfg.rust [ cargo rustc rustfmt rust-analyzer ])
       ++ (optionalItems cfg.sh [ shellcheck shfmt ])
       ++ (optionalItems cfg.ts [ nodejs eslint_d prettierd nodePackages.typescript-language-server ])
       ++ (optionalItems cfg.terraform [ terraform-ls ])
@@ -55,23 +45,23 @@ in
       ++ (optionalItems cfg.toml [ taplo ]);
 
     vim.luaConfigRC = ''
-      ${optionalString cfg.rust.enable ''
-        -- LSP Rust
-        vim.keymap.set('n', '<leader>ri',
-          function() return require('rust-tools.inlay_hints').toggle_inlay_hints() end,
-          {silent = true, noremap = true})
-        vim.keymap.set('n', '<leader>rr',
-          function() return require('rust-tools.runnables').runnables() end,
-          {silent = true, noremap = true})
-        vim.keymap.set('n', '<leader>re',
-          function() return require('rust-tools.expand_macro').expand_macro() end,
-          {silent = true, noremap = true})
-        vim.keymap.set('n', '<leader>rc',
-          function() return require('rust-tools.open_cargo_toml').open_cargo_toml() end,
-          {silent = true, noremap = true})
-        vim.keymap.set('n', '<leader>rg',
-          function() return require('rust-tools.crate_graph').view_create_graph('x11', nil) end,
-          {silent = true, noremap = true})''}
+      ${optionalString cfg.rust ''
+        -- LSP Rust: XXX: TODO: rustaceanvim???
+        --vim.keymap.set('n', '<leader>ri',
+        --  function() return require('rust-tools.inlay_hints').toggle_inlay_hints() end,
+        --  {silent = true, noremap = true})
+        --vim.keymap.set('n', '<leader>rr',
+        --  function() return require('rust-tools.runnables').runnables() end,
+        --  {silent = true, noremap = true})
+        --vim.keymap.set('n', '<leader>re',
+        --  function() return require('rust-tools.expand_macro').expand_macro() end,
+        --  {silent = true, noremap = true})
+        --vim.keymap.set('n', '<leader>rc',
+        --  function() return require('rust-tools.open_cargo_toml').open_cargo_toml() end,
+        --  {silent = true, noremap = true})
+        --vim.keymap.set('n', '<leader>rg',
+        --  function() return require('rust-tools.crate_graph').view_create_graph('x11', nil) end,
+        --  {silent = true, noremap = true})''}
 
       ${optionalString cfg.nix ''
         -- LSP Nix
@@ -155,7 +145,7 @@ in
       end
 
       --- Enable lspconfig
-      local lspconfig = require("lspconfig")
+      --- [XXX: TODO] local lspconfig = require("lspconfig")
       local capabilities = vim.lsp.protocol.make_client_capabilities()
       ${optionalString config.vim.autocomplete.enable ''
           capablities = require("cmp_nvim_lsp").default_capabilities(capabilities)''}
@@ -194,18 +184,29 @@ in
         },
       }
 
-      lspconfig.efm.setup(vim.tbl_extend('force', efmls_config, {
+      vim.lsp.enable('efm')
+      vim.lsp.config('efm', vim.tbl_extend('force', efmls_config, {
         capabilities = capabilities,
         on_attach = default_on_attach,
         cmd = {"efm-langserver"},
       }))
 
-      ${optionalString cfg.rust.enable ''
+      ${optionalString cfg.rust ''
         -- Rust Config
-        local rustAnalyzerOpts = {
-          ${cfg.rust.rustAnalyzerOpts},
+        local rustAnalyzerConfig = {
+          capabilities = capabilities,
+          on_attach = default_on_attach,
+          cmd = {"rust-analyzer"},
+          settings = {
+            ['rust-analyzer'] = {
+              experimental = {
+                procAttrMacros = true,
+              },
+            },
+          },
         }
-        local rustopts = {
+        -- XXX: TODO: not using; possible future move to rustaceanvim
+        local rustToolsConfig = {
           tools = {
             autoSetHints = true,
             hover_with_actions = false,
@@ -213,61 +214,65 @@ in
               only_current_line = false,
             },
           },
-          server = {
-            capabilities = capabilities,
-            on_attach = default_on_attach,
-            cmd = {"rust-analyzer"},
-            settings = {
-              ["rust-analyzer"] = rustAnalyzerOpts,
-            },
-          },
+          server = rustAnalyzerConfig,
         }
-        require("crates").setup{}
-        require("rust-tools").setup(rustopts)''}
+        vim.lsp.config('rust-analyzer', rustAnalyzerConfig)
+        require("crates").setup{}''}
 
       ${optionalString cfg.python ''
         -- Python Config
-        lspconfig.pyright.setup{
+        vim.lsp.enable('pyright')
+        vim.lsp.config('pyright', {
           capabilities = capabilities,
           on_attach = default_on_attach,
           cmd = {"pyright-langserver", "--stdio"},
-        }''}
+        })''}
 
+      --- XXX: TODO
       ${optionalString cfg.nix ''
         -- Nix (nil) Config
-        lspconfig.nil_ls.setup{
+        vim.lsp.enable('nil_ls')
+        vim.lsp.config('nil_ls', {
           capabilities = capabilities,
           on_attach = on_attach,
-          cmd = {"nil"},
+          cmd = { "nil" },
+          filetypes = { "nix" },
           settings = {
             ['nil'] = {
+              nix = {
+                flake = {
+                  autoArchive = false,
+                },
+              },
               formatting = {
                 command = { "nixpkgs-fmt" },
               },
             },
           },
-        }''}
+        })''}
 
       ${optionalString cfg.clang ''
         -- Clang Config
-        lspconfig.clangd.setup{
+        vim.lsp.enable('clangd')
+        vim.lsp.config('clangd', {
           capabilities = capabilities,
           on_attach = default_on_attach,
-        }''}
+        })''}
 
       ${optionalString cfg.go ''
         -- Go Config
-        lspconfig.gopls.setup {
+        vim.lsp.enable('gopls')
+        vim.lsp.config('gopls', {
           capabilities = capabilities,
           on_attach = default_on_attach,
           cmd = {"gopls", "serve"},
           settings = {
-            gopls = {
+            ['gopls'] = {
               gofumpt = true,
               staticcheck = true,
             },
           },
-        }
+        })
 
         function go_org_imports(wait_ms)
           local params = vim.lsp.util.make_range_params()
@@ -292,32 +297,34 @@ in
 
       ${optionalString cfg.ts ''
         -- TS config
-        lspconfig.ts_ls.setup {
+        vim.lsp.enable('ts_ls')
+        vim.lsp.config('ts_ls', {
           capabilities = capabilities,
           on_attach = on_attach,
           cmd = {"typescript-language-server", "--stdio"},
-        }''}
+        })''}
 
       ${optionalString cfg.terraform ''
         -- Terraform config
-        lspconfig.terraformls.setup {
+        vim.lsp.enable('terraformls')
+        vim.lsp.config('terraformls', {
           capabilities = capabilities,
           on_attach = on_attach,
           cmd = {"terraform-ls", "serve"},
-        }''}
+        })''}
 
       ${optionalString cfg.haskell ''
         -- Haskell config
-        lspconfig.hls.setup{
+        vim.lsp.enable('hls')
+        vim.lsp.config('hls', {
           capabilities = capabilities,
           on_attach = default_on_attach,
-        }''}
+        })''}
 
       ${optionalString cfg.lua ''
         -- Lua config
-        lspconfig.lua_ls.setup{
-          capabilities = capabilities,
-          on_attach = default_on_attach,
+        vim.lsp.enable('lua_ls')
+        vim.lsp.config('lua_ls', {
           settings = {
             Lua = {
               runtime = { version = "LuaJIT" },
@@ -326,14 +333,15 @@ in
               telemetry = { enable = false },
             },
           },
-        }''}
+        })''}
 
       ${optionalString cfg.zig ''
         -- Zig config
-        lspconfig.zls.setup{
+        vim.lsp.enable('zls')
+        vim.lsp.config('zls', {
           capabilities = capabilities,
           on_attach = default_on_attach,
-        }''}
+        })''}
     '';
   };
 }

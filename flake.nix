@@ -7,23 +7,23 @@
     flake-utils = {
       url = "github:numtide/flake-utils";
     };
-    # nix pkg available
-    plugin-plenary-nvim = {
-      url = "github:nvim-lua/plenary.nvim";
-      flake = false;
-    };
+    ## nix pkg available
+    #plugin-plenary-nvim = {
+    #  url = "github:nvim-lua/plenary.nvim";
+    #  flake = false;
+    #};
 
     # LSP plugins
-    # nix pkg available
-    plugin-nvim-lspconfig = {
-      url = "github:neovim/nvim-lspconfig";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    # nix pkg available
-    plugin-efmls-configs-nvim = {
-      url = "github:creativenull/efmls-configs-nvim";
-      flake = false;
-    };
+    ## nix pkg available
+    #plugin-nvim-lspconfig = {
+    #  url = "github:neovim/nvim-lspconfig";
+    #  inputs.nixpkgs.follows = "nixpkgs";
+    #};
+    ## nix pkg available
+    #plugin-efmls-configs-nvim = {
+    #  url = "github:creativenull/efmls-configs-nvim";
+    #  flake = false;
+    #};
     # nix pkg available
     #plugin-nvim-treesitter = {
     #  url = "github:nvim-treesitter/nvim-treesitter/v0.9.1";
@@ -36,35 +36,35 @@
     #  flake = false;
     #};
     # nix pkg available
-    plugin-nvim-cmp = {
-      url = "github:hrsh7th/nvim-cmp";
-      flake = false;
-    };
-    # nix pkg available
-    plugin-cmp-buffer = {
-      url = "github:hrsh7th/cmp-buffer";
-      flake = false;
-    };
-    # nix pkg available
-    plugin-cmp-nvim-lsp = {
-      url = "github:hrsh7th/cmp-nvim-lsp";
-      flake = false;
-    };
-    # nix pkg available
-    plugin-cmp-vsnip = {
-      url = "github:hrsh7th/cmp-vsnip";
-      flake = false;
-    };
-    # nix pkg available
-    plugin-cmp-path = {
-      url = "github:hrsh7th/cmp-path";
-      flake = false;
-    };
-    # nix pkg available
-    plugin-cmp-treesitter = {
-      url = "github:ray-x/cmp-treesitter";
-      flake = false;
-    };
+    #plugin-nvim-cmp = {
+    #  url = "github:hrsh7th/nvim-cmp";
+    #  flake = false;
+    #};
+    ## nix pkg available
+    #plugin-cmp-buffer = {
+    #  url = "github:hrsh7th/cmp-buffer";
+    #  flake = false;
+    #};
+    ## nix pkg available
+    #plugin-cmp-nvim-lsp = {
+    #  url = "github:hrsh7th/cmp-nvim-lsp";
+    #  flake = false;
+    #};
+    ## nix pkg available
+    #plugin-cmp-vsnip = {
+    #  url = "github:hrsh7th/cmp-vsnip";
+    #  flake = false;
+    #};
+    ## nix pkg available
+    #plugin-cmp-path = {
+    #  url = "github:hrsh7th/cmp-path";
+    #  flake = false;
+    #};
+    ## nix pkg available
+    #plugin-cmp-treesitter = {
+    #  url = "github:ray-x/cmp-treesitter";
+    #  flake = false;
+    #};
     # nix pkg available
     plugin-vim-vsnip = {
       url = "github:hrsh7th/vim-vsnip";
@@ -77,11 +77,11 @@
     };
 
     # Autopairs
-    # nix pkg available
-    plugin-nvim-autopairs = {
-      url = "github:windwp/nvim-autopairs";
-      flake = false;
-    };
+    ## nix pkg available
+    #plugin-nvim-autopairs = {
+    #  url = "github:windwp/nvim-autopairs";
+    #  flake = false;
+    #};
     # nix pkg available
     plugin-nvim-ts-autotag = {
       url = "github:windwp/nvim-ts-autotag";
@@ -89,28 +89,28 @@
     };
 
     # Rust
-    # nix pkg available
-    plugin-crates-nvim = {
-      url = "github:Saecki/crates.nvim";
-      flake = false;
-    };
-    # nix pkg available
-    plugin-rust-tools-nvim = {
-      url = "github:simrat39/rust-tools.nvim";
-      flake = false;
-    };
+    ## nix pkg available
+    #plugin-crates-nvim = {
+    #  url = "github:Saecki/crates.nvim";
+    #  flake = false;
+    #};
+    ## nix pkg available
+    #plugin-rustaceannvim = {
+    #  url = "github:mrcjkb/rustaceanvim";
+    #  flake = false;
+    #};
 
     # Visuals
-    # nix pkg available
-    plugin-nvim-cursorline = {
-      url = "github:yamatsum/nvim-cursorline";
-      flake = false;
-    };
-    # nix pkg available
-    plugin-indent-blankline-nvim = {
-      url = "github:lukas-reineke/indent-blankline.nvim";
-      flake = false;
-    };
+    ## nix pkg available
+    #plugin-nvim-cursorline = {
+    #  url = "github:yamatsum/nvim-cursorline";
+    #  flake = false;
+    #};
+    ## nix pkg available
+    #plugin-indent-blankline-nvim = {
+    #  url = "github:lukas-reineke/indent-blankline.nvim";
+    #  flake = false;
+    #};
     # nix pkg available
     plugin-nvim-web-devicons = {
       url = "github:kyazdani42/nvim-web-devicons";
@@ -148,10 +148,10 @@
       flake = false;
     };
     # nix pkg available
-    plugin-bufferline-nvim = {
-      url = "github:akinsho/bufferline.nvim";
-      flake = false;
-    };
+    #plugin-bufferline-nvim = {
+    #  url = "github:akinsho/bufferline.nvim";
+    #  flake = false;
+    #};
     # nix pkg available
     plugin-lualine-nvim = {
       url = "github:nvim-lualine/lualine.nvim";
@@ -174,10 +174,10 @@
 
     # Telescope
     # nix pkg available
-    plugin-telescope-nvim = {
-      url = "github:nvim-telescope/telescope.nvim/0.1.x";
-      flake = false;
-    };
+    #plugin-telescope-nvim = {
+    #  url = "github:nvim-telescope/telescope.nvim/0.1.x";
+    #  flake = false;
+    #};
 
     # Markdown preview
     # nix pkg available
@@ -203,7 +203,7 @@
             formatOnSave = true;
             clang = true;
             nix = true;
-            rust.enable = true;
+            rust = true;
             go = true;
             python = true;
             sh = true;
