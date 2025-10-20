@@ -171,6 +171,12 @@ in
       default = true;
     };
 
+    exrc = mkOption {
+      type = types.bool;
+      description = "Enable exrc";
+      default = false;
+    };
+
     backspace = mkOption {
       type = types.str;
       description = "Configure backspace behavior";
@@ -243,6 +249,8 @@ in
         vim.opt.hlsearch       = ${boolToString (! cfg.hideSearchHighlight)}
         vim.opt.incsearch      = ${boolToString (! cfg.hideSearchHighlight)}
         vim.opt.termguicolors  = ${boolToString cfg.colourTerm}
+        vim.opt.exrc           = ${boolToString cfg.exrc}
+        vim.opt.secure         = true
         ${lineNumberModeConfigs."${cfg.lineNumberMode}"}
         ${optionalString cfg.useSystemClipboard ''
             vim.opt.clipboard      = vim.opt.clipboard + "unnamedplus"''}
