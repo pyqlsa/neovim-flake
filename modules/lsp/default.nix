@@ -107,6 +107,11 @@ in
         vim.keymap.set('n', '<space>ca', vim.lsp.buf.code_action, bufopts)
         vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
         vim.keymap.set('n', '<space>f', function() vim.lsp.buf.format { async = true } end, bufopts)
+
+        -- Inlay Hints
+        if client.supports_method("textDocument/inlayHint") then
+          vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
+        end
       end
 
       ${optionalString cfg.formatOnSave ''
@@ -197,13 +202,25 @@ in
           capabilities = capabilities,
           on_attach = default_on_attach,
           cmd = {"rust-analyzer"},
+          filetypes = { 'rust' },
+          root_markers = {"Config.toml", ".git"},
+          single_file_support = true,
           settings = {
             ['rust-analyzer'] = {
               experimental = {
                 procAttrMacros = true,
               },
+              inlayHints = {
+                enable = true,
+              },
             },
           },
+          before_init = function(init_params, config)
+            -- See https://github.com/rust-lang/rust-analyzer/blob/eb5da56d839ae0a9e9f50774fa3eb78eb0964550/docs/dev/lsp-extensions.md?plain=1#L26
+            if config.settings and config.settings['rust-analyzer'] then
+              init_params.initializationOptions = config.settings['rust-analyzer']
+            end
+          end,
         }
         -- XXX: TODO: not using; possible future move to rustaceanvim
         local rustToolsConfig = {
