@@ -184,12 +184,12 @@ in
         },
       }
 
-      vim.lsp.enable('efm')
       vim.lsp.config('efm', vim.tbl_extend('force', efmls_config, {
         capabilities = capabilities,
         on_attach = default_on_attach,
         cmd = {"efm-langserver"},
       }))
+      vim.lsp.enable('efm')
 
       ${optionalString cfg.rust ''
         -- Rust Config
@@ -217,21 +217,21 @@ in
           server = rustAnalyzerConfig,
         }
         vim.lsp.config('rust-analyzer', rustAnalyzerConfig)
+        vim.lsp.enable('rust-analyzer')
         require("crates").setup{}''}
 
       ${optionalString cfg.python ''
         -- Python Config
-        vim.lsp.enable('pyright')
         vim.lsp.config('pyright', {
           capabilities = capabilities,
           on_attach = default_on_attach,
           cmd = {"pyright-langserver", "--stdio"},
-        })''}
+        })
+        vim.lsp.enable('pyright')''}
 
       --- XXX: TODO
       ${optionalString cfg.nix ''
         -- Nix (nil) Config
-        vim.lsp.enable('nil_ls')
         vim.lsp.config('nil_ls', {
           capabilities = capabilities,
           on_attach = on_attach,
@@ -249,19 +249,19 @@ in
               },
             },
           },
-        })''}
+        })
+        vim.lsp.enable('nil_ls')''}
 
       ${optionalString cfg.clang ''
         -- Clang Config
-        vim.lsp.enable('clangd')
         vim.lsp.config('clangd', {
           capabilities = capabilities,
           on_attach = default_on_attach,
-        })''}
+        })
+        vim.lsp.enable('clangd')''}
 
       ${optionalString cfg.go ''
         -- Go Config
-        vim.lsp.enable('gopls')
         vim.lsp.config('gopls', {
           capabilities = capabilities,
           on_attach = default_on_attach,
@@ -273,6 +273,7 @@ in
             },
           },
         })
+        vim.lsp.enable('gopls')
 
         function go_org_imports(wait_ms)
           local params = vim.lsp.util.make_range_params()
@@ -297,33 +298,32 @@ in
 
       ${optionalString cfg.ts ''
         -- TS config
-        vim.lsp.enable('ts_ls')
         vim.lsp.config('ts_ls', {
           capabilities = capabilities,
           on_attach = on_attach,
           cmd = {"typescript-language-server", "--stdio"},
-        })''}
+        })
+        vim.lsp.enable('ts_ls')''}
 
       ${optionalString cfg.terraform ''
         -- Terraform config
-        vim.lsp.enable('terraformls')
         vim.lsp.config('terraformls', {
           capabilities = capabilities,
           on_attach = on_attach,
           cmd = {"terraform-ls", "serve"},
-        })''}
+        })
+        vim.lsp.enable('terraformls')''}
 
       ${optionalString cfg.haskell ''
         -- Haskell config
-        vim.lsp.enable('hls')
         vim.lsp.config('hls', {
           capabilities = capabilities,
           on_attach = default_on_attach,
-        })''}
+        })
+        vim.lsp.enable('hls')''}
 
       ${optionalString cfg.lua ''
         -- Lua config
-        vim.lsp.enable('lua_ls')
         vim.lsp.config('lua_ls', {
           settings = {
             Lua = {
@@ -333,15 +333,16 @@ in
               telemetry = { enable = false },
             },
           },
-        })''}
+        })
+        vim.lsp.enable('lua_ls')''}
 
       ${optionalString cfg.zig ''
         -- Zig config
-        vim.lsp.enable('zls')
         vim.lsp.config('zls', {
           capabilities = capabilities,
           on_attach = default_on_attach,
-        })''}
+        })
+        vim.lsp.enable('zls')''}
     '';
   };
 }
