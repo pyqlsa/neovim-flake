@@ -242,7 +242,7 @@
       pluginOverlay = _lib.pluginOverlayBuilder;
 
       #externalPkgsOverlay = final: prev: {
-      #  <some-pkg> = inputs.<some-pkg>.defaultPackage.${final.system};
+      #  <some-pkg> = inputs.<some-pkg>.defaultPackage.${final.stdenv.hostPlatform.system};
       #};
 
       libOverlay = final: prev: {
